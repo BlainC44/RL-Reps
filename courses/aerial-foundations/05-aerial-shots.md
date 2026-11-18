@@ -2,7 +2,9 @@
 
 Turn your aerial into a shot. Hit the ball with intent toward the net.
 
-![Watch it from above: line up behind the ball, hit the side facing away from the goal, and the ball goes the opposite way.](media/aerial-shots-clip.svg)
+![Real gameplay: "How to AERIAL Rocket League" by slyk.](https://www.youtube.com/watch?v=psgP-iA-65E)
+
+![What to press: steer behind the ball, then jump, pull back and boost at the far side of it.](media/aerial-shots-inputs-clip.svg)
 
 # Setup
 

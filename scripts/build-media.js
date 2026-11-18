@@ -607,6 +607,35 @@ function powerslide() {
   return svgDoc(W, H, DEFS_TOP, body.join('\n'), 'Turning with and without a short powerslide (animated, view from above)');
 }
 
+// Static version: both turn paths with the car shown at a few moments.
+function powerslideDiagram() {
+  const H = 320;
+  const yBottom = 290;
+  const yTurn = 140;
+  const lanes = [
+    { cx: 170, R: 78, title: 'No powerslide', sub: 'wide, slow turn', drift: 0 },
+    { cx: 470, R: 30, title: 'Short powerslide', sub: 'tight, quick turn', drift: 22 },
+  ];
+  const parts = [topField(H), `<line x1="320" x2="320" y1="0" y2="${H}" stroke="${C.bg}" stroke-width="6"/>`];
+  for (const l of lanes) {
+    const tx = l.cx < 320 ? 160 : 480;
+    parts.push(`<text x="${tx}" y="28" font-size="15" font-weight="700" text-anchor="middle" fill="${C.text}">${l.title}</text>`);
+    parts.push(`<text x="${tx}" y="46" font-size="12" text-anchor="middle" fill="${C.muted}">${l.sub}</text>`);
+    parts.push(`<path d="M${l.cx - l.R},${yBottom} L${l.cx - l.R},${yTurn} A${l.R},${l.R} 0 0 1 ${l.cx + l.R},${yTurn} L${l.cx + l.R},${yBottom}" fill="none" stroke="${C.text}" stroke-width="2" stroke-dasharray="4 8" opacity=".4"/>`);
+    if (l.drift) parts.push(`<path d="M${l.cx - l.R - 9},${yTurn} A${l.R + 9},${l.R + 9} 0 0 1 ${l.cx + l.R + 9},${yTurn} M${l.cx - l.R + 9},${yTurn} A${l.R - 9},${l.R - 9} 0 0 1 ${l.cx + l.R - 9},${yTurn}" fill="none" stroke="#0b0d12" stroke-width="5" opacity=".7"/>`);
+    [0, 0.5, 1].forEach((u, i) => {
+      const th = Math.PI * u;
+      const x = l.cx - l.R * Math.cos(th);
+      const y = yTurn - l.R * Math.sin(th);
+      const a = 180 * u + (l.drift ? l.drift * Math.sin(th) : 0);
+      parts.push(`<g opacity="${[0.4, 0.7, 1][i]}" transform="translate(${r2(x)} ${r2(y)}) rotate(${r2(a)})"><use href="#tcar"/></g>`);
+    });
+  }
+  parts.push(`<rect x="530" y="${yTurn - 78}" width="96" height="24" rx="12" fill="${C.accent}"/><text x="578" y="${yTurn - 61}" font-size="12" font-weight="800" text-anchor="middle" fill="#14161c">POWERSLIDE</text>`);
+  parts.push(`<text x="${W - 12}" y="${H - 10}" font-size="11" text-anchor="end" fill="${C.muted}">View from above · simplified illustration</text>`);
+  return svgDoc(W, H, DEFS_TOP, parts.join('\n'), 'Turning with and without a short powerslide (view from above)');
+}
+
 function practiceLoop() {
   const H = 300;
   const cx = 320;
@@ -644,6 +673,208 @@ function practiceLoop() {
   return svgDoc(W, H, defs, arcs + boxes + center, 'The practice loop');
 }
 
+
+// ---------- controller-input clips (analog stick + buttons) ----------
+// Stick: x = left(−1)…right(+1), y = forward(−1)…back(+1). With default
+// controls, pulling the stick back tilts the car's nose up in the air.
+const INPUT_BUTTONS = {
+  Throttle: C.good,
+  Reverse: '#a78bfa',
+  Jump: '#38bdf8',
+  Boost: C.accent,
+  'Air roll': '#f472b6',
+  Powerslide: '#facc15',
+};
+
+// Stretch every time in a move by `f` (f = 2 → half speed).
+function slowDown(m, f) {
+  const iv = (list) => list.map(([a, b]) => [a * f, b * f]);
+  return {
+    ...m,
+    D: m.D * f,
+    stick: m.stick.map(([t, st, e]) => [t * f, st, e]),
+    buttons: m.buttons.map((b) => ({ ...b, on: iv(b.on) })),
+    notes: (m.notes || []).map((n) => ({ ...n, from: n.from * f, to: n.to * f })),
+    steps: m.steps.map((st) => ({ ...st, from: st.from * f, to: st.to * f })),
+  };
+}
+
+function inputsClip(key, spec) {
+  const f = spec.slow || 1.5;
+  const m = slowDown(spec, f);
+  const speed = f === 1 ? 'real speed' : f === 2 ? 'half speed' : `${Math.round(100 / f)}% speed`;
+  const D = m.D;
+  const H = 300;
+  const sx = 150;
+  const sy = 132;
+  const R = 74;
+  const travel = 50;
+  const T = grid(D);
+
+  // Stick base, axis labels and the moving thumb cap.
+  const stickFn = track(m.stick);
+  const cap = T.map(stickFn).map((p) => `${r2(sx + p.x * travel)} ${r2(sy + p.y * travel)}`);
+  const stick = `
+    <circle cx="${sx}" cy="${sy}" r="${R}" fill="#1b1f29" stroke="#2f3646" stroke-width="2"/>
+    <circle cx="${sx}" cy="${sy}" r="${travel}" fill="none" stroke="#2a2f3b" stroke-dasharray="3 6"/>
+    <line x1="${sx - R + 8}" x2="${sx + R - 8}" y1="${sy}" y2="${sy}" stroke="#2a2f3b"/>
+    <line x1="${sx}" x2="${sx}" y1="${sy - R + 8}" y2="${sy + R - 8}" stroke="#2a2f3b"/>
+    <text x="${sx}" y="${sy - R - 8}" font-size="12" text-anchor="middle" fill="${C.muted}">forward · nose down</text>
+    <text x="${sx}" y="${sy + R + 18}" font-size="12" text-anchor="middle" fill="${C.muted}">back · nose up</text>
+    <text x="${sx - R - 8}" y="${sy + 4}" font-size="12" text-anchor="end" fill="${C.muted}">left</text>
+    <text x="${sx + R + 8}" y="${sy + 4}" font-size="12" fill="${C.muted}">right</text>
+    <g>${animTransform('translate', D, T, cap)}
+      <circle r="30" fill="#0b0d12" opacity=".5" cy="3"/>
+      <circle r="28" fill="#3a4152" stroke="${C.accent}" stroke-width="3"/>
+      <circle r="18" fill="#2b313f"/>
+    </g>
+    <text x="${sx}" y="22" font-size="13" font-weight="700" text-anchor="middle" fill="${C.text}">Left stick</text>`;
+
+  // What the stick is doing right now, in words.
+  const notes = (m.notes || [])
+    .map((n) => {
+      const v = animVisible(D, [[n.from, n.to]]);
+      return `<g opacity="${v.initial}">${v.tag}<text x="${sx}" y="${H - 20}" font-size="13" font-weight="600" text-anchor="middle" fill="${C.accent}">${esc(n.text)}</text></g>`;
+    })
+    .join('');
+
+  // Buttons: dim pill, lit while held.
+  const bx = 318;
+  const bw = 148;
+  const bh = 30;
+  const buttons = m.buttons
+    .map((b, i) => {
+      const x = bx + (i % 2) * (bw + 10);
+      const y = 40 + Math.floor(i / 2) * (bh + 10);
+      const color = INPUT_BUTTONS[b.label];
+      const lit = animVisible(D, b.on);
+      const dim = animVisible(D, b.on, 0, 1);
+      return `<g opacity="${dim.initial}">${dim.tag}<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="15" fill="#1b1f29" stroke="#2f3646"/>
+        <text x="${x + bw / 2}" y="${y + 20}" font-size="13" font-weight="600" text-anchor="middle" fill="${C.muted}">${esc(b.label)}</text></g>
+        <g opacity="${lit.initial}">${lit.tag}<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="15" fill="${color}"/>
+        <text x="${x + bw / 2}" y="${y + 20}" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">${esc(b.label)} — held</text></g>`;
+    })
+    .join('');
+  const rows = Math.ceil(m.buttons.length / 2);
+  const legendY = 40 + rows * (bh + 10) + 24;
+
+  const body = [
+    `<text x="${bx}" y="22" font-size="13" font-weight="700" fill="${C.text}">Buttons</text>`,
+    stick, notes, buttons,
+    stepLegend(D, m.steps, bx - 2, legendY),
+    footer(H, `Default controls · shown at ${speed}`),
+  ].join('\n');
+  return svgDoc(W, H, '', body, `${m.title}: what to press (animated)`);
+}
+
+const INPUTS = {
+  'aerial-foundations/first-touches': {
+    stick: [[0, { x: 0, y: 0 }], [0.5, { x: 0.25 }], [1.6, { x: 0.25 }], [2.0, { x: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 3.7]] }, { label: 'Jump', on: [[2.3, 2.7]] }],
+    notes: [
+      { from: 0, to: 2.3, text: 'Steer to where the ball will land' },
+      { from: 2.3, to: 2.7, text: 'Jump as the ball starts to fall' },
+      { from: 2.7, to: 6, text: 'Stick centered: hit it with the front' },
+    ],
+  },
+  'aerial-foundations/basic-aerial': {
+    stick: [[0, { x: 0, y: 0 }], [1.5, {}], [1.6, { y: 1 }], [1.75, {}], [2.0, { y: 0.35 }], [2.6, { x: 0.15, y: 0.45 }], [3.3, { x: 0, y: 0.3 }], [3.5, { y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 1.5]] }, { label: 'Jump', on: [[1.2, 1.5]] }, { label: 'Boost', on: [[1.5, 3.3]] }],
+    notes: [
+      { from: 0, to: 1.2, text: 'Drive at the ball' },
+      { from: 1.2, to: 1.5, text: 'Jump' },
+      { from: 1.5, to: 1.75, text: 'Pull back: nose up' },
+      { from: 1.75, to: 3.3, text: 'Small corrections to aim' },
+      { from: 3.3, to: 6.5, text: 'Let go after the touch' },
+    ],
+  },
+  'aerial-foundations/fast-aerial': {
+    slow: 2,
+    stick: [[0, { x: 0, y: 0 }], [0.6, {}], [0.7, { y: 1 }], [2.2, {}], [2.45, { y: -0.4 }], [3.2, { y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 0.6]] }, { label: 'Jump', on: [[0.6, 0.85], [0.95, 1.07]] }, { label: 'Boost', on: [[0.6, 2.2]] }],
+    notes: [
+      { from: 0.6, to: 0.95, text: 'Boost + jump (hold), pull back' },
+      { from: 0.95, to: 1.4, text: 'Tap jump again, stick STILL back' },
+      { from: 1.4, to: 2.2, text: 'Keep boosting, nose up' },
+      { from: 2.2, to: 3.4, text: 'Ease forward to level out' },
+    ],
+  },
+  'aerial-foundations/aerial-shots': {
+    title: 'Aerial shots',
+    D: 4.5,
+    steps: [
+      { label: 'Check where the goal is', from: 0, to: 1.2 },
+      { label: 'Line up behind the ball', from: 1.2, to: 2.0 },
+      { label: 'Jump, tilt back, boost', from: 2.0, to: 2.9 },
+      { label: 'Hit the far side of the ball', from: 2.9, to: 4.5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.2, { x: -0.55 }], [1.6, {}], [1.9, { x: 0 }], [2.1, { y: 1 }], [2.3, {}], [2.5, { y: 0.35 }], [2.9, {}], [3.1, { y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 2.0]] }, { label: 'Jump', on: [[2.0, 2.25]] }, { label: 'Boost', on: [[2.25, 2.9]] }],
+    notes: [
+      { from: 0, to: 1.9, text: 'Steer to get behind the ball' },
+      { from: 2.0, to: 2.4, text: 'Jump and pull back' },
+      { from: 2.4, to: 2.9, text: 'Aim the nose at the far side' },
+      { from: 2.9, to: 4.5, text: 'Ball goes away from your hit' },
+    ],
+  },
+  'recovery-and-movement/land-on-wheels': {
+    stick: [[0, { x: 0, y: 0 }], [1.3, {}], [1.4, { x: -1 }], [2.0, {}], [2.15, { x: 0 }]],
+    buttons: [{ label: 'Air roll', on: [[1.3, 2.1]] }, { label: 'Throttle', on: [[2.4, 3.4]] }],
+    notes: [
+      { from: 0, to: 1.3, text: 'Hands off: look for the ground' },
+      { from: 1.3, to: 2.1, text: 'Hold air roll + stick left/right' },
+      { from: 2.1, to: 5, text: 'Land level, then drive' },
+    ],
+  },
+  'recovery-and-movement/powerslide-turns': {
+    slow: 2,
+    title: 'Powerslide turns',
+    D: 4.5,
+    steps: [
+      { label: 'Drive in straight', from: 0, to: 0.75 },
+      { label: 'Steer + tap powerslide', from: 0.75, to: 1.1 },
+      { label: 'Let go, keep steering', from: 1.1, to: 1.34 },
+      { label: 'Drive out with speed', from: 1.34, to: 4.5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.7, {}], [0.8, { x: 1 }], [1.3, {}], [1.42, { x: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 2.1]] }, { label: 'Powerslide', on: [[0.8, 1.1]] }],
+    notes: [
+      { from: 0, to: 0.75, text: 'Straight' },
+      { from: 0.75, to: 1.1, text: 'Full steer + a SHORT powerslide' },
+      { from: 1.1, to: 1.42, text: 'Release powerslide as you face out' },
+      { from: 1.42, to: 4.5, text: 'Straighten up' },
+    ],
+  },
+  'recovery-and-movement/half-flip': {
+    slow: 2,
+    stick: [[0, { x: 0, y: 0 }], [1.25, {}], [1.32, { y: 1 }], [1.62, {}], [1.7, { y: -1 }], [2.0, {}], [2.08, { x: -1, y: 0 }], [2.45, {}], [2.55, { x: 0 }]],
+    buttons: [
+      { label: 'Reverse', on: [[0, 1.3]] },
+      { label: 'Jump', on: [[1.2, 1.28], [1.4, 1.48]] },
+      { label: 'Air roll', on: [[2.0, 2.5]] },
+      { label: 'Throttle', on: [[2.5, 3.8]] },
+    ],
+    notes: [
+      { from: 0, to: 1.2, text: 'Reverse away from where you want to go' },
+      { from: 1.2, to: 1.7, text: 'Jump, then stick back + jump = backflip' },
+      { from: 1.7, to: 2.0, text: 'Snap the stick FORWARD to cancel' },
+      { from: 2.0, to: 2.5, text: 'Air roll + stick sideways to flip upright' },
+      { from: 2.5, to: 6, text: 'Throttle: drive away' },
+    ],
+  },
+  'recovery-and-movement/wavedash': {
+    slow: 2.5,
+    stick: [[0, { x: 0, y: 0 }], [1.3, {}], [1.38, { y: 0.45 }], [1.53, {}], [1.57, { y: -1 }], [1.7, {}], [1.82, { y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 3.3]] }, { label: 'Jump', on: [[1.0, 1.08], [1.55, 1.63]] }],
+    notes: [
+      { from: 1.0, to: 1.3, text: 'Tap jump for a small hop' },
+      { from: 1.3, to: 1.55, text: 'Tilt back a little: nose up' },
+      { from: 1.55, to: 1.7, text: 'Stick forward + jump as wheels touch' },
+      { from: 1.7, to: 5, text: 'Skid away faster' },
+    ],
+  },
+};
+
 // ---------- write files ----------
 function write(rel, svg) {
   const file = path.join(ROOT, rel);
@@ -655,12 +886,14 @@ function write(rel, svg) {
 console.log('Building course media…');
 for (const [key, m] of Object.entries(MOVES)) {
   const [course, name] = key.split('/');
-  write(`${course}/media/${name}-clip.svg`, sideClip(m));
   write(`${course}/media/${name}-steps.svg`, sideSteps(m));
 }
-const shots = aerialShots();
-write('aerial-foundations/media/aerial-shots-clip.svg', shots.clip);
-write('aerial-foundations/media/aerial-shots-diagram.svg', shots.diagram);
-write('recovery-and-movement/media/powerslide-turns-clip.svg', powerslide());
+for (const [key, spec] of Object.entries(INPUTS)) {
+  const [course, name] = key.split('/');
+  const base = MOVES[key] || {};
+  write(`${course}/media/${name}-inputs-clip.svg`, inputsClip(key, { ...base, ...spec }));
+}
+write('aerial-foundations/media/aerial-shots-diagram.svg', aerialShots().diagram);
+write('recovery-and-movement/media/powerslide-turns-diagram.svg', powerslideDiagram());
 write('aerial-foundations/media/practice-loop.svg', practiceLoop());
 console.log('Done.');

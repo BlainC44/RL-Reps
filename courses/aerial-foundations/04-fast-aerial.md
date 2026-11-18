@@ -2,7 +2,9 @@
 
 Get off the ground faster by using your **second jump** to gain height quickly. This is how you beat opponents to high balls.
 
-![Watch it: the bars underneath show which buttons are held at each moment. Note the quick second jump.](media/fast-aerial-clip.svg)
+![Real gameplay: "Fast Aerial Tutorial in 60 seconds!" by IFexd.](https://www.youtube.com/watch?v=ThLz5OoSazc)
+
+![What to press: hold boost, jump and pull back, then tap jump again with the stick still back.](media/fast-aerial-inputs-clip.svg)
 
 # Cues
 

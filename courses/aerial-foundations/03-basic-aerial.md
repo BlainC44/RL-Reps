@@ -2,7 +2,9 @@
 
 Lift off, point your nose at the ball, and boost into it — your first real aerial.
 
-![Watch it: jump, tilt back, then hold boost and steer the nose at the ball.](media/basic-aerial-clip.svg)
+![Real gameplay: "How To AERIAL In Rocket League For BEGINNERS" by Boortand.](https://www.youtube.com/watch?v=bgy8foUzx90)
+
+![What to press: jump, pull the stick back, then hold boost and make small corrections.](media/basic-aerial-inputs-clip.svg)
 
 # Setup
 

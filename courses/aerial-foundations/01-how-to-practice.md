@@ -16,7 +16,13 @@ Mechanics are built by **many short, focused attempts**, not by hoping they show
 
 # Reading the visuals
 
-Most units have a **looping clip** and a **step-by-step picture**. In the clips, the numbered list in the corner lights up to show which step the car is on. Click any clip to replay it from the start. They're simplified drawings to show the *shape* of each move, so match the timing to what you feel in game.
+Each drill has three kinds of visuals:
+
+- **Real gameplay:** a short tutorial video from a Rocket League creator, so you can see the move in the actual game.
+- **What to press:** an animated controller clip showing the **left stick** and **buttons** at each moment, slowed down so you can follow it. The numbered steps light up in sync. Click it to replay.
+- **Step by step:** a numbered picture of the car's position at each key moment.
+
+Clips use default controls: pulling the stick **back** tilts the nose **up** in the air.
 
 # Ground rules
 

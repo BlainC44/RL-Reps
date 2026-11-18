@@ -2,7 +2,9 @@
 
 Gain a burst of speed by dodging just as your wheels touch the ground after a small jump or fall.
 
-![Watch it: the faded car didn't wavedash. See how far ahead the wavedash puts you.](media/wavedash-clip.svg)
+![Real gameplay: "How to WAVEDASH Rocket League" by slyk.](https://www.youtube.com/watch?v=_DSiejDocYw)
+
+![What to press: tap jump, tilt back slightly, then stick forward + jump right as your wheels touch.](media/wavedash-inputs-clip.svg)
 
 # Cues
 

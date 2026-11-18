@@ -2,7 +2,9 @@
 
 Turn your car around 180° quickly while keeping momentum — the fastest way to recover when you're facing the wrong way.
 
-![Watch it: backflip, cancel when you're upside down, air roll, and drive off the way you came.](media/half-flip-clip.svg)
+![Real gameplay: "How to PERFECT Half Flip in 60 Seconds" by DradRL.](https://www.youtube.com/watch?v=XZIkmuheKe8)
+
+![What to press: reverse, jump, stick back + jump, snap the stick forward, then air roll upright.](media/half-flip-inputs-clip.svg)
 
 # Cues
 

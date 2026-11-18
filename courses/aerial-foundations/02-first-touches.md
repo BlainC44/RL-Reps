@@ -2,7 +2,9 @@
 
 Meet the ball cleanly in the air right after it bounces, using a single jump. This trains your timing and your read of the ball's height.
 
-![Watch it: drive to the landing spot, jump as the ball starts to fall, hit it with the front.](media/first-touches-clip.svg)
+![Real gameplay: "Rocket League 101: Aerials and Power Shots" from the official Rocket League channel.](https://www.youtube.com/watch?v=mlRP1yROcnk)
+
+![What to press: steer to the landing spot, then jump as the ball comes down.](media/first-touches-inputs-clip.svg)
 
 # Setup
 

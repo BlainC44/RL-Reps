@@ -7,7 +7,7 @@ const path = require('node:path');
 
 const { createApp } = require('../server');
 const { renderMarkdown } = require('../lib/markdown');
-const { toEmbed } = require('../lib/courses');
+const { toEmbed } = require('../lib/markdown');
 
 function startServer() {
   const dataFile = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'rlreps-')), 'db.json');
@@ -59,6 +59,10 @@ test('every sample lesson has visuals and they all load', async () => {
       for (const u of course.units) {
         const srcs = [...u.html.matchAll(/<img src="([^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, '&'));
         assert.ok(srcs.length > 0, `${c.id}/${u.id} has no pictures or clips`);
+        if (u.type === 'drill') {
+          assert.match(u.html, /youtube-nocookie\.com\/embed\//, `${c.id}/${u.id} has no real gameplay video`);
+          assert.ok(srcs.some((src) => src.includes('-inputs-clip.svg')), `${c.id}/${u.id} has no stick/button clip`);
+        }
         for (const src of srcs) {
           const res = await fetch(base + src);
           assert.equal(res.status, 200, src);
@@ -81,6 +85,14 @@ test('video links become embeds', () => {
   assert.equal(toEmbed('https://vimeo.com/12345').src, 'https://player.vimeo.com/video/12345');
   assert.equal(toEmbed('https://example.com/clip.mp4').kind, 'file');
   assert.equal(toEmbed('not a url'), null);
+  assert.equal(toEmbed('https://www.youtube.com/watch?v=KOMQSgjLJ7k&t=56').src, 'https://www.youtube-nocookie.com/embed/KOMQSgjLJ7k?start=56');
+  assert.equal(toEmbed('https://youtu.be/dQw4w9WgXcQ?t=1m30s').src, 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?start=90');
+});
+
+test('YouTube links on their own line become embedded players', () => {
+  const html = renderMarkdown('![Real gameplay: half-flip](https://www.youtube.com/watch?v=XZIkmuheKe8)');
+  assert.match(html, /<figure class="media embed"><div class="video"><iframe src="https:\/\/www.youtube-nocookie.com\/embed\/XZIkmuheKe8"/);
+  assert.match(html, /Real gameplay · YouTube/);
 });
 
 test('full repetition loop: register → browse → complete → resume', async () => {
