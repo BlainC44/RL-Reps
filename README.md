@@ -1,0 +1,139 @@
+# RL Reps
+
+**Open-source LMS for deliberate practice in video games.**
+
+RL Reps is a minimal learning platform built for one thing: giving video gamers structured, self-guided repetitions. Create an account, pick a course, and work through drills or lessons at your own pace. No classrooms, no deadlines, no social features — just focused reps.
+
+## Quick start
+
+You need [Node.js](https://nodejs.org) 18 or newer. There is nothing to install: RL Reps has **zero dependencies**.
+
+```bash
+git clone https://github.com/BlainC44/RL-Reps.git
+cd RL-Reps
+npm start
+```
+
+Open <http://localhost:3000>, create an account, and start a course.
+
+Run the tests with `npm test`.
+
+## What it does
+
+| Capability | How it works |
+| --- | --- |
+| **Accounts** | Username + password sign-up and login. Passwords are hashed with scrypt; sessions use an HttpOnly cookie. |
+| **Course catalog** | Every folder in `courses/` shows up as a course card with your progress on it. |
+| **Course player** | Step through units in order. Units can be a **lesson** (text), a **video**, or a **drill** with a rep target and an on-page rep counter. |
+| **Progress tracking** | Completing a unit is saved to your account. The home page shows a **Continue** button that drops you on your next unfinished unit, plus a daily practice streak. |
+
+### The repetition loop
+
+```
+start a course → complete a unit → progress is saved → continue, or come back tomorrow
+```
+
+Everything in the UI is built around that loop: the home page's first thing is "Continue", every unit ends with **Complete & next**, and the streak gives a reason to return the next day.
+
+### Intentionally left out
+
+Forums, certificates, payments, instructor dashboards, live sessions, AI tutors, and complex assessments. These can be added later. v1 stays small enough that one developer can ship and maintain it.
+
+## Writing a course
+
+A course is a folder inside `courses/` with a `course.json` file and one Markdown file per unit:
+
+```
+courses/
+  aerial-foundations/
+    course.json
+    01-how-to-practice.md
+    02-first-touches.md
+    ...
+```
+
+The folder name is the course's ID (it appears in the URL), so use lowercase words and dashes.
+
+### `course.json`
+
+```json
+{
+  "title": "Aerial Foundations",
+  "game": "Rocket League",
+  "level": "Beginner",
+  "order": 1,
+  "estimatedMinutes": 45,
+  "summary": "One-line pitch shown on the course card.",
+  "description": "Longer intro shown on the course page. Markdown allowed.",
+  "units": [
+    { "id": "how-to-practice", "title": "How to practice", "type": "text", "minutes": 3, "file": "01-how-to-practice.md" },
+    { "id": "basic-aerial", "title": "The basic aerial", "type": "drill", "reps": 25, "minutes": 10, "file": "03-basic-aerial.md" },
+    { "id": "breakdown", "title": "Pro breakdown", "type": "video", "video": "https://www.youtube.com/watch?v=VIDEO_ID", "file": "notes.md" }
+  ]
+}
+```
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| `title` | ✓ | Course name. |
+| `units` | ✓ | Ordered list. Learners go through it top to bottom. |
+| `units[].id` | ✓ | Unique within the course. **Don't rename it after launch** — saved progress is keyed by it. |
+| `units[].title` | ✓ | |
+| `units[].type` | | `text` (default), `video`, or `drill`. |
+| `units[].file` | | Markdown file with the unit's content. |
+| `units[].reps` | | Rep target for drills. |
+| `units[].video` | | YouTube or Vimeo link (auto-embedded) or a direct video file URL. |
+| `units[].minutes` | | Rough time estimate. |
+| `game`, `level`, `summary`, `description`, `estimatedMinutes`, `order` | | Shown in the catalog. Lower `order` comes first. |
+
+### Unit Markdown
+
+Supported: `#` headings, paragraphs, bullet and numbered lists, `> callouts`, **bold**, *italic*, `code`, links, and `---` rules. Raw HTML is escaped, so course files can't run scripts.
+
+A good drill unit usually has: **Goal**, **Setup**, **Cues**, and **A rep counts when…**. See the sample courses for examples.
+
+Restart the server after editing courses.
+
+## Project layout
+
+```
+server.js          HTTP server + JSON API (Node built-ins only)
+lib/store.js       Users, sessions, progress, streaks — saved to data/db.json
+lib/courses.js     Loads and validates courses/ at startup
+lib/markdown.js    Small, HTML-safe Markdown renderer
+public/            Front end: one HTML page, vanilla JS, CSS
+courses/           Course content (JSON + Markdown)
+test/              Tests (node --test)
+```
+
+### API
+
+| Method | Path | Body | Notes |
+| --- | --- | --- | --- |
+| POST | `/api/register` | `{ username, password }` | Creates account and logs in. |
+| POST | `/api/login` | `{ username, password }` | |
+| POST | `/api/logout` | | |
+| GET | `/api/me` | | Current user, streak, and where to resume. |
+| GET | `/api/courses` | | Catalog with per-user progress counts. |
+| GET | `/api/courses/:id` | | Course with units and completion times. |
+| POST | `/api/progress` | `{ courseId, unitId, completed }` | `completed: false` un-marks a unit. |
+
+### Configuration
+
+| Env var | Default |
+| --- | --- |
+| `PORT` | `3000` |
+| `DATA_FILE` | `data/db.json` |
+| `COURSES_DIR` | `courses/` |
+
+## Deploying
+
+Any host that runs Node works (Render, Railway, Fly.io, a VPS). Keep `data/` on persistent storage and put the app behind HTTPS. The JSON file store is meant for a single server; swapping it for SQLite or Postgres only touches `lib/store.js`.
+
+## Success metric
+
+A gamer finishes a short course, comes back the next day without being prompted, and starts another set of reps.
+
+## License
+
+[MIT](LICENSE)

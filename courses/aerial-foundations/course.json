@@ -1,0 +1,16 @@
+{
+  "title": "Aerial Foundations",
+  "game": "Rocket League",
+  "level": "Beginner",
+  "order": 1,
+  "estimatedMinutes": 45,
+  "summary": "Go from ground-only to confidently hitting the ball in the air. Five short sessions in Free Play.",
+  "description": "Each unit is one focused block of reps. Do one or two units per session, then come back tomorrow. Consistency beats marathon sessions.",
+  "units": [
+    { "id": "how-to-practice", "title": "How to practice (read first)", "type": "text", "minutes": 3, "file": "01-how-to-practice.md" },
+    { "id": "first-touches", "title": "First touches off the bounce", "type": "drill", "reps": 20, "minutes": 8, "file": "02-first-touches.md" },
+    { "id": "basic-aerial", "title": "The basic aerial", "type": "drill", "reps": 25, "minutes": 10, "file": "03-basic-aerial.md" },
+    { "id": "fast-aerial", "title": "The fast aerial", "type": "drill", "reps": 30, "minutes": 12, "file": "04-fast-aerial.md" },
+    { "id": "aerial-shots", "title": "Aerial shots on goal", "type": "drill", "reps": 20, "minutes": 12, "file": "05-aerial-shots.md" }
+  ]
+}
