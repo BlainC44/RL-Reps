@@ -52,6 +52,7 @@ function errorView(err) {
 async function refreshMe() {
   me = await api('/me');
   nav.replaceChildren(
+    // filter(Boolean): replaceChildren() would render a null entry as the text "null"
     ...(me.user
       ? [
           me.streak && me.streak.days > 0
@@ -60,7 +61,8 @@ async function refreshMe() {
           h('span', { class: 'who' }, me.user.username),
           h('button', { class: 'btn ghost small', onclick: logout }, 'Log out'),
         ]
-      : [h('a', { href: '#/login', class: 'btn ghost small' }, 'Log in'), h('a', { href: '#/register', class: 'btn small' }, 'Sign up')]),
+      : [h('a', { href: '#/login', class: 'btn ghost small' }, 'Log in'), h('a', { href: '#/register', class: 'btn small' }, 'Sign up')]
+    ).filter(Boolean),
   );
 }
 
