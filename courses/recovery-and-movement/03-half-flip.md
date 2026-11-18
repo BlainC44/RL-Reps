@@ -2,7 +2,11 @@
 
 Turn your car around 180° quickly while keeping momentum — the fastest way to recover when you're facing the wrong way.
 
+![Watch it: backflip, cancel when you're upside down, air roll, and drive off the way you came.](media/half-flip-clip.svg)
+
 # Cues
+
+![Step by step: the car ends up facing the other way without losing speed.](media/half-flip-steps.svg)
 
 1. Drive **backward** (reverse).
 2. **Jump**, then **flip backward** (second jump with the stick pulled back).

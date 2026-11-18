@@ -2,11 +2,15 @@
 
 Lift off, point your nose at the ball, and boost into it — your first real aerial.
 
+![Watch it: jump, tilt back, then hold boost and steer the nose at the ball.](media/basic-aerial-clip.svg)
+
 # Setup
 
 Free Play. Pop the ball up with a jump-hit or let it bounce high, then back off so you have room to approach.
 
 # Cues
+
+![Step by step: line up → jump → tilt back → steer → hit.](media/basic-aerial-steps.svg)
 
 1. Line up so the ball is **in front of you**, not off to the side.
 2. **Jump**, then immediately **tilt back** (pull the stick toward you) to point the nose up.

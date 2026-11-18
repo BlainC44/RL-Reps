@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 254" width="640" height="254" role="img">
+<title>The wavedash — step by step</title>
+<style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+
+<defs>
+  <g id="car">
+    <path d="M-38,-2 L-38,-11 Q-38,-15 -34,-15 L-20,-15 L-10,-27 L16,-27 L27,-15 L35,-15 Q39,-15 39,-11 L39,-2 Q39,2 35,2 L-34,2 Q-38,2 -38,-2 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <path d="M-16,-15 L-8,-24 L5,-24 L5,-15 Z" fill="#bfe3ff"/>
+    <path d="M8,-24 L14,-24 L22,-15 L8,-15 Z" fill="#bfe3ff"/>
+    <rect x="34" y="-11" width="5" height="4" rx="1" fill="#ffe08a"/>
+    <rect x="-38" y="-11" width="3" height="4" fill="#ef4444"/>
+    <circle cx="-23" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="-23" cy="4" r="3" fill="#9ca3af"/>
+    <circle cx="24" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="24" cy="4" r="3" fill="#9ca3af"/>
+  </g>
+  <g id="flame">
+    <path d="M-38,-13 L-66,-8 L-38,-3 Z" fill="#ff7a1a"/>
+    <path d="M-38,-11 L-54,-8 L-38,-5 Z" fill="#ffd166"/>
+  </g>
+  <g id="ball">
+    <circle r="18" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M-12,-13 Q0,-4 12,-13 M-17,5 Q0,0 17,5 M-6,17 Q0,8 6,17" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+</defs><defs><marker id="rollhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff7a1a"/></marker></defs>
+<rect width="640" height="254" fill="#11141b"/>
+<g>
+      <clipPath id="p0"><rect x="4" y="4" width="152" height="182" rx="10"/></clipPath>
+      <rect x="4" y="4" width="152" height="182" rx="10" fill="#151923" stroke="#2a2f3b"/>
+      <g clip-path="url(#p0)">
+        <rect x="0" y="160" width="160" height="30" fill="#17251c"/>
+        <line x1="0" x2="160" y1="160" y2="160" stroke="#2f6b3f" stroke-width="2"/>
+        
+        
+        
+        
+        <g transform="translate(80 122.72) scale(1) rotate(-3.89) scale(1 1)">
+          <use href="#car"/>
+        </g>
+        
+      </g>
+      <circle cx="22" cy="24" r="12" fill="#ff7a1a"/>
+      <text x="22" y="28.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">1</text>
+      <text x="80" y="208" font-size="13" font-weight="600" text-anchor="middle" fill="#e9ecf2">Small jump</text>
+    </g>
+<g>
+      <clipPath id="p1"><rect x="164" y="4" width="152" height="182" rx="10"/></clipPath>
+      <rect x="164" y="4" width="152" height="182" rx="10" fill="#151923" stroke="#2a2f3b"/>
+      <g clip-path="url(#p1)">
+        <rect x="160" y="160" width="160" height="30" fill="#17251c"/>
+        <line x1="160" x2="320" y1="160" y2="160" stroke="#2f6b3f" stroke-width="2"/>
+        
+        
+        
+        
+        <g transform="translate(240 134.8) scale(1) rotate(-9.12) scale(1 1)">
+          <use href="#car"/>
+        </g>
+        
+      </g>
+      <circle cx="182" cy="24" r="12" fill="#ff7a1a"/>
+      <text x="182" y="28.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">2</text>
+      <text x="240" y="208" font-size="13" font-weight="600" text-anchor="middle" fill="#e9ecf2">Nose up slightly</text>
+    </g>
+<g>
+      <clipPath id="p2"><rect x="324" y="4" width="152" height="182" rx="10"/></clipPath>
+      <rect x="324" y="4" width="152" height="182" rx="10" fill="#151923" stroke="#2a2f3b"/>
+      <g clip-path="url(#p2)">
+        <rect x="320" y="160" width="160" height="30" fill="#17251c"/>
+        <line x1="320" x2="480" y1="160" y2="160" stroke="#2f6b3f" stroke-width="2"/>
+        
+        <g transform="translate(400 145) scale(1)" fill="#6b7280"><circle cx="-34" cy="8" r="8" opacity=".6"/><circle cx="-20" cy="4" r="10" opacity=".5"/><circle cx="-6" cy="9" r="6" opacity=".6"/></g>
+        
+        
+        <g transform="translate(400 145) scale(1) rotate(-6) scale(1 1)">
+          <use href="#car"/>
+        </g>
+        
+      </g>
+      <circle cx="342" cy="24" r="12" fill="#ff7a1a"/>
+      <text x="342" y="28.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">3</text>
+      <text x="400" y="208" font-size="13" font-weight="600" text-anchor="middle" fill="#e9ecf2">Dodge as wheels touch</text>
+    </g>
+<g>
+      <clipPath id="p3"><rect x="484" y="4" width="152" height="182" rx="10"/></clipPath>
+      <rect x="484" y="4" width="152" height="182" rx="10" fill="#151923" stroke="#2a2f3b"/>
+      <g clip-path="url(#p3)">
+        <rect x="480" y="160" width="160" height="30" fill="#17251c"/>
+        <line x1="480" x2="640" y1="160" y2="160" stroke="#2f6b3f" stroke-width="2"/>
+        
+        
+        
+        <g transform="translate(560 148) scale(1)"><path d="M-46,-18 h-24 M-44,-8 h-34 M-46,2 h-22" stroke="#e9ecf2" stroke-width="3" stroke-linecap="round" opacity=".7"/></g>
+        <g transform="translate(560 148) scale(1) rotate(0) scale(1 1)">
+          <use href="#car"/>
+        </g>
+        
+      </g>
+      <circle cx="502" cy="24" r="12" fill="#ff7a1a"/>
+      <text x="502" y="28.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">4</text>
+      <text x="560" y="208" font-size="13" font-weight="600" text-anchor="middle" fill="#e9ecf2">Skid away faster</text>
+    </g>
+</svg>

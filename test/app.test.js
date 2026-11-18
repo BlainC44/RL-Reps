@@ -39,6 +39,43 @@ test('markdown escapes HTML and renders basics', () => {
   assert.match(html, /<ul><li>a<\/li><li>b<\/li><\/ul>/);
 });
 
+test('images and clips render as figures', () => {
+  const html = renderMarkdown('![A <b>clip</b>](media/x-clip.svg)\n\n![Pic](media/y.png)\n\n![Vid](media/z.mp4)', {
+    resolveMedia: (p) => `/media/c/${p}`,
+  });
+  assert.match(html, /<figure class="media clip"><img src="\/media\/c\/media\/x-clip.svg" alt="A &lt;b&gt;clip&lt;\/b&gt;"/);
+  assert.match(html, /<figure class="media"><img src="\/media\/c\/media\/y.png"/);
+  assert.match(html, /<video src="\/media\/c\/media\/z.mp4" autoplay muted loop/);
+  assert.doesNotMatch(html, /<b>/);
+});
+
+test('every sample lesson has visuals and they all load', async () => {
+  const { server, base } = await startServer();
+  try {
+    const call = client(base);
+    const { body } = await call('GET', '/api/courses');
+    for (const c of body.courses) {
+      const course = (await call('GET', `/api/courses/${c.id}`)).body;
+      for (const u of course.units) {
+        const srcs = [...u.html.matchAll(/<img src="([^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, '&'));
+        assert.ok(srcs.length > 0, `${c.id}/${u.id} has no pictures or clips`);
+        for (const src of srcs) {
+          const res = await fetch(base + src);
+          assert.equal(res.status, 200, src);
+          assert.equal(res.headers.get('content-type'), 'image/svg+xml', src);
+          await res.arrayBuffer();
+        }
+      }
+    }
+    // Media can't escape its course folder or serve non-media files.
+    assert.equal((await fetch(`${base}/media/aerial-foundations/course.json`)).status, 404);
+    assert.equal((await fetch(`${base}/media/aerial-foundations/..%2f..%2fserver.js`)).status, 404);
+    assert.equal((await fetch(`${base}/media/nope/media/x.svg`)).status, 404);
+  } finally {
+    server.close();
+  }
+});
+
 test('video links become embeds', () => {
   assert.equal(toEmbed('https://www.youtube.com/watch?v=dQw4w9WgXcQ').src, 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ');
   assert.equal(toEmbed('https://vimeo.com/12345').src, 'https://player.vimeo.com/video/12345');

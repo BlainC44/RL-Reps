@@ -2,6 +2,8 @@
 
 Turn sharply without losing much speed by using powerslide.
 
+![Watch it from above: a short powerslide turns much tighter and finishes the turn first.](media/powerslide-turns-clip.svg)
+
 # Setup
 
 Free Play. Pick two points on the field (for example, the two goalposts on one side) and drive back and forth around them.

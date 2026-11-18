@@ -272,5 +272,14 @@ async function route() {
   }
 }
 
+// Clicking a looping clip restarts it from the beginning.
+app.addEventListener('click', (e) => {
+  const img = e.target.closest('figure.clip img');
+  if (!img) return;
+  const url = new URL(img.src);
+  url.searchParams.set('replay', Date.now());
+  img.src = url.toString();
+});
+
 window.addEventListener('hashchange', route);
 refreshMe().then(route, errorView);

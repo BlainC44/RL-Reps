@@ -2,7 +2,11 @@
 
 Gain a burst of speed by dodging just as your wheels touch the ground after a small jump or fall.
 
+![Watch it: the faded car didn't wavedash. See how far ahead the wavedash puts you.](media/wavedash-clip.svg)
+
 # Cues
+
+![Step by step: small jump, nose up, dodge right as the wheels touch.](media/wavedash-steps.svg)
 
 1. Do a **small jump** (a quick tap of jump).
 2. In the air, **tilt the nose up slightly**.

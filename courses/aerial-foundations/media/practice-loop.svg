@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img">
+<title>The practice loop</title>
+<style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff7a1a"/></marker></defs>
+<rect width="640" height="300" fill="#11141b"/>
+<path d="M432.5,63.4 A225,100 0 0 1 514.86,100" fill="none" stroke="#ff7a1a" stroke-width="3" marker-end="url(#ah)"/><path d="M514.86,200 A225,100 0 0 1 432.5,236.6" fill="none" stroke="#ff7a1a" stroke-width="3" marker-end="url(#ah)"/><path d="M207.5,236.6 A225,100 0 0 1 125.14,200" fill="none" stroke="#ff7a1a" stroke-width="3" marker-end="url(#ah)"/><path d="M125.14,100 A225,100 0 0 1 207.5,63.4" fill="none" stroke="#ff7a1a" stroke-width="3" marker-end="url(#ah)"/><g transform="translate(320 50)">
+        <rect x="-82" y="-26" width="164" height="52" rx="12" fill="#1b1f29" stroke="#2f3646"/>
+        <circle cx="-62" cy="0" r="12" fill="#ff7a1a"/><text x="-62" y="4.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">1</text>
+        <text x="-44" y="-3" font-size="14" font-weight="700" fill="#e9ecf2">Pick a unit</text>
+        <text x="-44" y="14" font-size="12" fill="#8a93a6">one mechanic</text>
+      </g><g transform="translate(545 150)">
+        <rect x="-82" y="-26" width="164" height="52" rx="12" fill="#1b1f29" stroke="#2f3646"/>
+        <circle cx="-62" cy="0" r="12" fill="#ff7a1a"/><text x="-62" y="4.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">2</text>
+        <text x="-44" y="-3" font-size="14" font-weight="700" fill="#e9ecf2">Do the reps</text>
+        <text x="-44" y="14" font-size="12" fill="#8a93a6">count with +1</text>
+      </g><g transform="translate(320 250)">
+        <rect x="-82" y="-26" width="164" height="52" rx="12" fill="#1b1f29" stroke="#2f3646"/>
+        <circle cx="-62" cy="0" r="12" fill="#ff7a1a"/><text x="-62" y="4.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">3</text>
+        <text x="-44" y="-3" font-size="14" font-weight="700" fill="#e9ecf2">Complete &amp; next</text>
+        <text x="-44" y="14" font-size="12" fill="#8a93a6">progress is saved</text>
+      </g><g transform="translate(95 150)">
+        <rect x="-82" y="-26" width="164" height="52" rx="12" fill="#1b1f29" stroke="#2f3646"/>
+        <circle cx="-62" cy="0" r="12" fill="#ff7a1a"/><text x="-62" y="4.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">4</text>
+        <text x="-44" y="-3" font-size="14" font-weight="700" fill="#e9ecf2">Come back tomorrow</text>
+        <text x="-44" y="14" font-size="12" fill="#8a93a6">keep the streak</text>
+      </g><text x="320" y="148" font-size="18" font-weight="800" text-anchor="middle" fill="#e9ecf2">The rep loop</text>
+    <text x="320" y="168" font-size="12" text-anchor="middle" fill="#8a93a6">10–20 focused minutes</text>
+</svg>

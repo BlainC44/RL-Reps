@@ -23,6 +23,13 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.webp': 'image/webp',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.mov': 'video/quicktime',
   '.ico': 'image/x-icon',
 };
 
@@ -193,6 +200,28 @@ function createApp({ coursesDir = COURSES_DIR, dataFile = DATA_FILE } = {}) {
     return send(res, 404, { error: 'Not found.' });
   }
 
+  // ---------- course media (pictures & clips) ----------
+  // /media/<courseId>/<path inside that course folder>
+  function serveMedia(req, res, url) {
+    const [, , courseId, ...rest] = url.pathname.split('/').map((p) => decodeURIComponent(p));
+    if (!courses.byId[courseId] || !rest.length) return send(res, 404, 'Not found');
+    const base = path.resolve(coursesDir, courseId);
+    const file = path.resolve(base, ...rest);
+    const type = MIME[path.extname(file).toLowerCase()];
+    if (!file.startsWith(base + path.sep) || !type || type.startsWith('text/') || type.startsWith('application/')) {
+      return send(res, 404, 'Not found');
+    }
+    fs.readFile(file, (err, data) => {
+      if (err) return send(res, 404, 'Not found');
+      send(res, 200, data, {
+        'Content-Type': type,
+        'Cache-Control': 'no-cache',
+        // SVGs can't run scripts or load anything external, even if opened directly.
+        'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; img-src data:; media-src 'self'",
+      });
+    });
+  }
+
   // ---------- static files ----------
   function serveStatic(req, res, url) {
     let rel = decodeURIComponent(url.pathname);
@@ -215,6 +244,7 @@ function createApp({ coursesDir = COURSES_DIR, dataFile = DATA_FILE } = {}) {
     try {
       if (url.pathname.startsWith('/api/')) return await handleApi(req, res, url);
       if (req.method !== 'GET' && req.method !== 'HEAD') return send(res, 405, 'Method not allowed');
+      if (url.pathname.startsWith('/media/')) return serveMedia(req, res, url);
       return serveStatic(req, res, url);
     } catch (err) {
       const status = err.status || 500;
