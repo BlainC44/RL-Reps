@@ -165,3 +165,15 @@ A gamer finishes a short course, comes back the next day without being prompted,
 ## License
 
 [MIT](LICENSE)
+
+## Deploying to AWS (Elastic Beanstalk + CloudFront)
+
+The repo is ready for Elastic Beanstalk's **Node.js** platform:
+
+- `Procfile` runs `npm run serve` (no file watching).
+- `.platform/hooks/…/01-data-dir.sh` creates `/var/app/rlreps-data`, which keeps accounts and progress across redeploys. Data is lost if the instance itself is replaced, so back up `db.json` (or move to a database) before relying on it.
+- `.ebextensions/01-env.config` sets `DATA_FILE` and `COOKIE_SECURE=true` (login cookies only over HTTPS).
+
+To deploy: zip the repo contents (`git archive -o rl-reps.zip HEAD`), create a single-instance Node.js environment in Elastic Beanstalk and upload the zip. Then create a CloudFront distribution with the environment's URL as an **HTTP-only** origin, **Redirect HTTP to HTTPS**, all HTTP methods allowed, cache policy **CachingDisabled** and origin request policy **AllViewer**. Use the `https://….cloudfront.net` address. Because cookies are Secure, logging in over the plain `http://…elasticbeanstalk.com` address won't work — that's intended.
+
+To update, upload a new zip in the environment's **Upload and deploy**.

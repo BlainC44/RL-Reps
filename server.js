@@ -82,8 +82,11 @@ function createApp({ coursesDir = COURSES_DIR, dataFile = DATA_FILE } = {}) {
     return out;
   }
 
+  // COOKIE_SECURE=true when served over HTTPS (e.g. behind CloudFront), so the
+  // session cookie is never sent over plain HTTP.
+  const secureCookie = process.env.COOKIE_SECURE === 'true';
   function sessionCookie(token, maxAgeSeconds) {
-    return `rlreps_session=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${maxAgeSeconds}`;
+    return `rlreps_session=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${maxAgeSeconds}${secureCookie ? '; Secure' : ''}`;
   }
 
   function currentUser(req) {
