@@ -6,7 +6,7 @@ RL Reps is a minimal learning platform built for one thing: giving video gamers 
 
 ## Quick start
 
-You need [Node.js](https://nodejs.org) 18 or newer. There is nothing to install: RL Reps has **zero dependencies**.
+You need [Node.js](https://nodejs.org) 22 or newer (on macOS older than 13.5, use the Node 22 installer). There is nothing to install: RL Reps has **zero dependencies**.
 
 ```bash
 git clone https://github.com/BlainC44/RL-Reps.git
@@ -15,6 +15,8 @@ npm start
 ```
 
 Open <http://localhost:3000>, create an account, and start a course.
+
+`npm start` restarts the server automatically when you edit `server.js`, `lib/` or anything in `courses/`. For production, use `npm run serve` (no file watching).
 
 Run the tests with `npm test`.
 
@@ -110,7 +112,7 @@ The sample courses' clips and step pictures are original animated SVGs generated
 
 A good drill unit usually has: **Goal**, **Setup**, **Cues**, and **A rep counts when…**. See the sample courses for examples.
 
-Restart the server after editing courses.
+With `npm start`, the server reloads automatically after you edit a course.
 
 ## Project layout
 

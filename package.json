@@ -4,12 +4,13 @@
   "description": "Open-source LMS for deliberate practice in video games.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node --watch-path=server.js --watch-path=lib --watch-path=courses server.js",
     "test": "node --test",
-    "media": "node scripts/build-media.js"
+    "media": "node scripts/build-media.js",
+    "serve": "node server.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "license": "MIT",
   "repository": {
