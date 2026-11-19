@@ -27,9 +27,9 @@ Free Play: roll the ball into the corner so it comes back across the goal, then 
 # Training packs
 
 :::packs
-8D93-C997-0ACD-8416 | Aerial Shots – Redirects | Poquito | Intermediate | Passes across the goal for you to redirect in.
+8D93-C997-0ACD-8416 | Aerial Shots – Redirects | Poquito |  | Passes across the goal for you to redirect in.
 F22D-2A16-68BA-C6C7 | Redirects V1 | Ryuu Tsubasa | Champion | Faster, harder redirects. | featured
-6614-D9A2-8D61-D6BC | Redirect Pack | James RL | Intermediate | From the video above.
+6614-D9A2-8D61-D6BC | Redirect Pack | James RL |  | From the video above.
 :::
 
 # A rep counts when…

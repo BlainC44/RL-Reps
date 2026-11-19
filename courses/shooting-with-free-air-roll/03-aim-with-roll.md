@@ -28,8 +28,8 @@ Free Play: put the ball in the air near the goal and alternate targets: left pos
 # Training packs
 
 :::packs
-A4D6-1260-C51D-4375 | Air Roll Shots | FLuuMP | Intermediate | Air roll shots at different angles, from the creator of the Air Roll Shots tutorial.
-30EF-9E98-C844-E83D | Air Roll Aerials | WayProtein | Platinum | Aerials where the roll decides where it goes. | featured
+A4D6-1260-C51D-4375 | Air Roll Shots | FLuuMP |  | Air roll shots at different angles, from the creator of the Air Roll Shots tutorial.
+30EF-9E98-C844-E83D | Air Roll Aerials | WayProtein |  | Aerials where the roll decides where it goes. | featured
 :::
 
 # A rep counts when…

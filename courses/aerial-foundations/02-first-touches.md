@@ -24,7 +24,7 @@ Free Play. Let the ball drop and bounce once or twice near you.
 :::packs
 E4AE-EDC9-E77E-9FC0 | Ground Shot Consistency | Torment | Pro pack | Clean, consistent touches on balls coming toward you, the base for hitting off the bounce. | featured
 6EB1-79B2-33B8-681C | Ground Shots |  | Silver | A dependable starting pack for meeting the ball cleanly.
-7028-5E10-88EF-E83E | Powershots |  | Silver | Add power once your touches are connecting.
+7028-5E10-88EF-E83E | Powershots | Yeeza | Diamond | Add power once your touches are connecting. | featured
 :::
 
 # A rep counts when…

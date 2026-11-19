@@ -30,7 +30,7 @@ Free Play: pop the ball up and take it out of the air at about car height. Then 
 # Training packs
 
 :::packs
-84D2-072D-80CF-7D0D | Air Roll Shots | Yeeza | Intermediate | The classic pack for this exact mechanic. | featured
+84D2-072D-80CF-7D0D | Air Roll Shots | Yeeza |  | The classic pack for this exact mechanic. | featured
 1C4E-D311-1506-B6C1 | Power shot + Air roll shot | Tama | Diamond | Mixes power shots with air roll shots. | featured
 :::
 

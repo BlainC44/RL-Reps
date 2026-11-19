@@ -134,6 +134,24 @@ A good drill unit usually has: **Goal**, **Setup**, **Cues**, and **A rep counts
 
 With `npm start`, the server reloads automatically after you edit a course.
 
+## Database
+
+`npm run db` builds a SQLite database at `data/rl-reps.db` from the course files, using Node's built-in SQLite (nothing to install). Add `-- --users data/db.json` to also import accounts and progress from the app's data file.
+
+| Table | One row per |
+| --- | --- |
+| `sections` | homepage group ("For beginners", "Intermediate") |
+| `courses` | course |
+| `units` | lesson, with its Markdown |
+| `videos` | YouTube embed in a lesson |
+| `media` | picture or clip file |
+| `unit_media` | picture or clip shown in a lesson |
+| `training_packs` | training pack code (stored once) |
+| `unit_packs` | pack listed in a lesson |
+| `users`, `sessions`, `progress`, `practice_days` | learner data |
+
+Views: `course_overview` (units, drills and reps per course) and `pack_usage` (which lessons use each pack). The course folders stay the source of truth; re-run `npm run db` after editing a course.
+
 ## Project layout
 
 ```

@@ -28,7 +28,7 @@ Free Play: roll the ball out from the middle and shoot from different angles. Th
 # Training packs
 
 :::packs
-6CF3-4C0B-32B4-1AC7 | Strength and Accuracy | Virge | Intermediate | From the video above: shots that reward power *and* placement.
+6CF3-4C0B-32B4-1AC7 | Strength and Accuracy | Virge |  | From the video above: shots that reward power *and* placement.
 4912-A5C9-9A56-555D | Shooting Consistency | WayProtein | Platinum | Simple ground shots to build a repeatable approach. | featured
 :::
 

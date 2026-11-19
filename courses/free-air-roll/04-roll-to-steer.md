@@ -30,7 +30,7 @@ Free Play: pop the ball up to one side of you, take off, and steer to it with ro
 # Training packs
 
 :::packs
-30EF-9E98-C844-E83D | Air Roll Aerials | WayProtein | Platinum | Aerials that need a roll before the touch. | featured
+30EF-9E98-C844-E83D | Air Roll Aerials | WayProtein |  | Aerials that need a roll before the touch. | featured
 761E-8C2F-53CD-14F5 | Awkward Shooties | Markydooda | Champion | Off-angle balls that make you steer in the air. | featured
 :::
 

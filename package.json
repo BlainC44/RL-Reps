@@ -7,7 +7,8 @@
     "start": "node --watch-path=server.js --watch-path=lib --watch-path=courses server.js",
     "test": "node --test",
     "media": "node scripts/build-media.js",
-    "serve": "node server.js"
+    "serve": "node server.js",
+    "db": "node --no-warnings scripts/build-db.js"
   },
   "engines": {
     "node": ">=22"
