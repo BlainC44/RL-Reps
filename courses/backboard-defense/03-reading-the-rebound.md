@@ -24,7 +24,14 @@ Defend a backboard ball **from in front of your net**: watch it hit the wall, re
 
 # Setup
 
-Custom Training → search for a **backboard reads** pack. A popular one is "Backboard Reads" by Rizzo (code `07E1-81BC-DD2E-BF8C`). Pack codes from older guides sometimes stop working. If a code doesn't load, search the pack name instead.
+Use the training packs below, or in Free Play hit the ball high onto your own backboard and practice reading it from in front of the net.
+
+# Training packs
+
+:::packs
+07E1-81BC-DD2E-BF8C | Backboard Reads | Rizzo |  | The classic pack for reading balls off your own backboard.
+9F09-E4D3-EAB0-69AD | Defensive Backboard Reads | Torment |  | A pro player's pack for reading rebounds from inside your goal.
+:::
 
 # A rep counts when…
 

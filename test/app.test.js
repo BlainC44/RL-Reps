@@ -80,6 +80,24 @@ test('every sample lesson has visuals and they all load', async () => {
   }
 });
 
+test('training pack blocks render copyable codes and reject typos', () => {
+  const html = renderMarkdown(':::packs\n0A40-E21D-61C1-49C6 | Novice Aerials | WayProtein | Beginner | Start <here> | featured\n:::');
+  assert.match(html, /<code>0A40-E21D-61C1-49C6<\/code><button type="button" class="btn small copy-code" data-code="0A40-E21D-61C1-49C6"/);
+  assert.match(html, /Featured by Psyonix/);
+  assert.match(html, /Start &lt;here&gt;/);
+  assert.throws(() => renderMarkdown(':::packs\nABCD-1234 | Bad\n:::'), /Invalid training pack code/);
+});
+
+test('every drill has training packs or explains why not', async () => {
+  const { loadCourses } = require('../lib/courses');
+  const { list } = loadCourses(require('node:path').join(__dirname, '..', 'courses'));
+  for (const c of list) {
+    for (const u of c.units.filter((x) => x.type === 'drill')) {
+      assert.match(u.html, /<h2>Training packs<\/h2>/, `${c.id}/${u.id} has no Training packs section`);
+    }
+  }
+});
+
 test('video links become embeds', () => {
   assert.equal(toEmbed('https://www.youtube.com/watch?v=dQw4w9WgXcQ').src, 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ');
   assert.equal(toEmbed('https://vimeo.com/12345').src, 'https://player.vimeo.com/video/12345');

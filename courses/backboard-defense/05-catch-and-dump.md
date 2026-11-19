@@ -32,6 +32,15 @@ This is "control first, boom second" in practice.
 
 Free Play: pop the ball off your backwall and practice the soft first touch, then the carry. Start near the corner and work your way toward the middle of the goal.
 
+# Training packs
+
+No pack is built just for catch-and-dump. Use these for realistic backboard balls, and practice a **soft first touch** into the corner instead of clearing.
+
+:::packs
+9274-D4A2-967B-0D7A | Wall Clears | JSTN | Pro pack | Fast balls into your backboard to practice controlling. | featured
+B1BB-45DA-0741-FB32 | Backboard Clears Exercise | Droogans | Diamond | Backboard balls you can catch and carry instead of booming. | featured
+:::
+
 # A rep counts when…
 
 You tried a soft, controlled first touch on the wall and carried toward the corner, even if the ball fell off.

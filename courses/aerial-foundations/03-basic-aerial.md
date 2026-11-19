@@ -25,6 +25,13 @@ Free Play. Pop the ball up with a jump-hit or let it bounce high, then back off 
 - **Running out of boost:** start with at least half a tank.
 - **Arriving late:** start the aerial sooner rather than waiting for the ball to come lower.
 
+# Training packs
+
+:::packs
+0A40-E21D-61C1-49C6 | Novice Aerials | WayProtein | Beginner | Start here: slow, reachable first aerials. | featured
+F0BD-E416-D47D-AF28 | Basic Aerials |  | Platinum | The next step once novice aerials feel easy.
+:::
+
 # A rep counts when…
 
 You jumped, tilted, and boosted toward the ball on purpose.

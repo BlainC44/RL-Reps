@@ -22,6 +22,13 @@ Turn your car around 180° quickly while keeping momentum — the fastest way to
 - **Reps 1–10:** slow and deliberate. Focus only on the backflip and the cancel.
 - **Reps 11–30:** add the air roll and try to land driving forward.
 
+# Training packs
+
+:::packs
+549A-4BDE-CDB4-C6F5 | Half Flips | Lazord | Intermediate | Focused reps of the half-flip itself.
+306E-237A-053E-BE1E | Cancel/Half Flip Shots | Yeeza | Advanced | Half-flip straight into a shot, like in a real game.
+:::
+
 # A rep counts when…
 
 You did the backflip, attempted the cancel, and tried to roll upright.

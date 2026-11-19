@@ -22,6 +22,14 @@ Get off the ground faster by using your **second jump** to gain height quickly. 
 - **Reps 1–10:** no ball. Just fast aerial straight up and land. Feel the rhythm.
 - **Reps 11–30:** fast aerial toward the ball in Free Play.
 
+# Training packs
+
+:::packs
+F6D6-E749-4D17-484D | Fast Aerial Training | Virge | Beginner | Built to drill the fast aerial input itself.
+97B9-5B48-5277-8A85 | Fast Aerial Training | Lazord | Intermediate | Higher balls that need a real fast aerial to reach in time.
+C5C6-3EFC-AFD5-4ECC | Fast Aerials | al0t | Pro pack | A pro player's fast aerial pack for when the others feel easy. | featured
+:::
+
 # A rep counts when…
 
 You did both jumps with boost on and the car stayed pointed upward.

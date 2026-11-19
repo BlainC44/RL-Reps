@@ -20,6 +20,13 @@ Gain a burst of speed by dodging just as your wheels touch the ground after a sm
 - Start while driving slowly so you can feel the timing.
 - If you flip fully, you dodged too early. If nothing happens, you dodged too late.
 
+# Training packs
+
+:::packs
+1A31-038B-5121-3265 | Wavedash Training | Lazord | Beginner | Learn the wavedash timing.
+F9EF-2D99-BA51-9E8A | Wave Dash Shots | Yeeza | Advanced | Wavedash into shots once the timing is consistent.
+:::
+
 # A rep counts when…
 
 You did the small jump, tilted back, and tried to time the dodge with the landing.

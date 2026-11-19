@@ -27,7 +27,14 @@ When your team is under pressure and **needs time** to rotate back and pick up b
 
 # Setup
 
-Custom Training → search for **backboard clears**. "Backboard Clears" by WayProtein (code `F1D5-36FA-257C-80A8`) is a commonly recommended pack. If a code doesn't load, search the pack name.
+Use the training packs below. In Free Play, you can also pop the ball onto your backwall and practice getting under it.
+
+# Training packs
+
+:::packs
+F1D5-36FA-257C-80A8 | Backboard Clears | WayProtein |  | Clears off your backboard, made for the half-volley boom.
+B1BB-45DA-0741-FB32 | Backboard Clears Exercise | Droogans | Diamond | More backboard clear reps once the first pack feels easy. | featured
+:::
 
 # A rep counts when…
 

@@ -29,6 +29,13 @@ When you rotate back on defense and a teammate is already in net, go **up onto t
 
 Free Play: hit the ball toward your own backwall from midfield, then race back and practice the rotation onto the wall. With a friend, take turns shooting at the backboard while the other rotates.
 
+# Training packs
+
+:::packs
+9274-D4A2-967B-0D7A | Wall Clears | JSTN | Pro pack | Fast shots into your backboard: get up the wall and meet them. | featured
+D7F8-FD53-98D1-DAFE | Backboard Saves |  | Diamond | Saves on balls headed for your backboard.
+:::
+
 # A rep counts when…
 
 You rotated back on the side, got onto the backboard and faced the play, whether or not you touched the ball.

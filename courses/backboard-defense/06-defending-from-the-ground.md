@@ -29,7 +29,14 @@ If a teammate is already playing wide or on the wall, the goalie usually **stays
 
 # Setup
 
-Custom Training → search for **backboard defense** or **backboard saves** packs, for example "Big D's Backboard D" (code `859E-5768-6175-235B`). If a code doesn't load, search the pack name.
+Use the training packs below.
+
+# Training packs
+
+:::packs
+859E-5768-6175-235B | Big D's Backboard D | Deifik |  | Backboard defense scenarios, including cutting balls off from the ground.
+87E7-773A-CBE5-B2C3 | Novice Defender | WayProtein | Gold | Easier saves to build the basics of defending from your net. | featured
+:::
 
 # A rep counts when…
 

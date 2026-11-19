@@ -19,6 +19,14 @@ Free Play. Let the ball drop and bounce once or twice near you.
 - Hold jump for full height; let go once you feel the car rise.
 - Hit the ball with the **front of the car**, aiming roughly at either goal.
 
+# Training packs
+
+:::packs
+E4AE-EDC9-E77E-9FC0 | Ground Shot Consistency | Torment | Pro pack | Clean, consistent touches on balls coming toward you, the base for hitting off the bounce. | featured
+6EB1-79B2-33B8-681C | Ground Shots |  | Silver | A dependable starting pack for meeting the ball cleanly.
+7028-5E10-88EF-E83E | Powershots |  | Silver | Add power once your touches are connecting.
+:::
+
 # A rep counts when…
 
 You jumped on purpose and tried to meet the ball in the air. Touch or no touch, it counts.

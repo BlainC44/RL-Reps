@@ -109,6 +109,18 @@ Put media files in a `media/` folder inside the course and reference them on the
 
 The server refuses to start if a lesson points at a media file that doesn't exist, so broken images are caught right away.
 
+### Training packs
+
+List Rocket League custom training packs in a `:::packs` block. Each line is `code | name | creator | difficulty | why it fits | featured` (creator, difficulty, why and `featured` are optional; `featured` adds a "Featured by Psyonix" badge):
+
+```
+:::packs
+0A40-E21D-61C1-49C6 | Novice Aerials | WayProtein | Beginner | Start here: slow, reachable first aerials. | featured
+:::
+```
+
+Each pack shows as a card with the code and a one-click **Copy** button. Codes are checked at startup, so a typo (wrong length or characters) stops the server with a clear error instead of reaching players.
+
 Each drill in the sample courses has three visuals:
 
 1. **Real gameplay** — an embedded YouTube tutorial by a Rocket League creator (credited in the caption; videos are embedded with YouTube's player, not copied).

@@ -272,6 +272,42 @@ async function route() {
   }
 }
 
+// One-click copy for training pack codes.
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // Fallback for browsers that block the clipboard API.
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.append(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    return ok;
+  }
+}
+
+app.addEventListener('click', async (e) => {
+  const btn = e.target.closest('button.copy-code');
+  if (!btn) return;
+  const ok = await copyText(btn.dataset.code);
+  btn.textContent = ok ? 'Copied ✓' : 'Press Cmd/Ctrl+C';
+  btn.classList.toggle('copied', ok);
+  if (!ok) {
+    const range = document.createRange();
+    range.selectNodeContents(btn.previousElementSibling);
+    getSelection().removeAllRanges();
+    getSelection().addRange(range);
+  }
+  clearTimeout(btn._t);
+  btn._t = setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+});
+
 // Clicking a looping clip restarts it from the beginning.
 app.addEventListener('click', (e) => {
   const img = e.target.closest('figure.clip img');
