@@ -1,0 +1,42 @@
+{
+  "title": "Free Air Roll",
+  "game": "Rocket League",
+  "level": "Intermediate",
+  "order": 4,
+  "section": "Intermediate",
+  "estimatedMinutes": 45,
+  "summary": "Hold one button and your stick rolls the car instead of turning it. Learn to roll, stop on an angle, and use roll to steer in the air.",
+  "description": "Free air roll is the most flexible way to control your car in the air. These drills build the feel step by step: roll, stop, then combine roll with pitch.",
+  "units": [
+    {
+      "id": "what-is-free-air-roll",
+      "title": "What free air roll does",
+      "type": "text",
+      "file": "01-what-is-free-air-roll.md"
+    },
+    {
+      "id": "rolling-control",
+      "title": "Rolling control",
+      "type": "drill",
+      "reps": 20,
+      "minutes": 10,
+      "file": "02-rolling-control.md"
+    },
+    {
+      "id": "stop-on-an-angle",
+      "title": "Stopping on an angle",
+      "type": "drill",
+      "reps": 20,
+      "minutes": 10,
+      "file": "03-stop-on-an-angle.md"
+    },
+    {
+      "id": "roll-to-steer",
+      "title": "Roll, then pitch, to steer",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 12,
+      "file": "04-roll-to-steer.md"
+    }
+  ]
+}

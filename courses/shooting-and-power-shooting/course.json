@@ -1,0 +1,50 @@
+{
+  "title": "Shooting & Power Shooting",
+  "game": "Rocket League",
+  "level": "Intermediate",
+  "order": 5,
+  "section": "Intermediate",
+  "estimatedMinutes": 50,
+  "summary": "Hit the ball where you mean to, then hit it hard. Contact point, the turn shot, the bounce power shot and the aerial power shot.",
+  "description": "A fast shot gives the defender less time to react. Start with accurate ground shots, then add power from turns, bounces and the air.",
+  "units": [
+    {
+      "id": "what-makes-power",
+      "title": "What makes a shot powerful",
+      "type": "text",
+      "file": "01-what-makes-power.md"
+    },
+    {
+      "id": "ground-shots",
+      "title": "Ground shots: aim with contact",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 10,
+      "file": "02-ground-shots.md"
+    },
+    {
+      "id": "turn-powershot",
+      "title": "The turn shot (ground power shot)",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 12,
+      "file": "03-turn-powershot.md"
+    },
+    {
+      "id": "bounce-powershot",
+      "title": "The bounce power shot",
+      "type": "drill",
+      "reps": 30,
+      "minutes": 12,
+      "file": "04-bounce-powershot.md"
+    },
+    {
+      "id": "aerial-powershot",
+      "title": "The aerial power shot",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 14,
+      "file": "05-aerial-powershot.md"
+    }
+  ]
+}

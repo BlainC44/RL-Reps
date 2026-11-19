@@ -1,0 +1,42 @@
+{
+  "title": "Shooting with Free Air Roll",
+  "game": "Rocket League",
+  "level": "Intermediate",
+  "order": 6,
+  "section": "Intermediate",
+  "estimatedMinutes": 45,
+  "summary": "Use a small roll before the touch to change the angle and power of your shots: air roll shots, aiming with roll, and redirects.",
+  "description": "Do Free Air Roll and Shooting & Power Shooting first. This course puts them together: a little roll, then the touch.",
+  "units": [
+    {
+      "id": "roll-and-aim",
+      "title": "How roll changes your shot",
+      "type": "text",
+      "file": "01-roll-and-aim.md"
+    },
+    {
+      "id": "air-roll-shot",
+      "title": "The air roll shot",
+      "type": "drill",
+      "reps": 30,
+      "minutes": 12,
+      "file": "02-air-roll-shot.md"
+    },
+    {
+      "id": "aim-with-roll",
+      "title": "Aiming with roll",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 12,
+      "file": "03-aim-with-roll.md"
+    },
+    {
+      "id": "air-roll-redirects",
+      "title": "Air roll redirects",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 14,
+      "file": "04-air-roll-redirects.md"
+    }
+  ]
+}

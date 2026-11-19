@@ -1171,6 +1171,418 @@ function backboardOverview() {
   return svgDoc(W, H, DEFS_SIDE, parts.join('\n'), 'A backboard attack: the ball hits your backwall and rebounds into the danger zone');
 }
 
+
+// ---------- intermediate courses: free air roll & shooting ----------
+// View from BEHIND the car: shows roll. Wheels at the bottom (y ≈ +18).
+const DEFS_REAR = `<defs><g id="rcar">
+  <rect x="-36" y="-8" width="72" height="20" rx="7" fill="${C.car}" stroke="${C.carDark}" stroke-width="1.5"/>
+  <path d="M-24,-8 L-17,-24 L17,-24 L24,-8 Z" fill="${C.car}" stroke="${C.carDark}" stroke-width="1.5"/>
+  <path d="M-18,-10 L-13,-21 L13,-21 L18,-10 Z" fill="${C.glass}"/>
+  <rect x="-33" y="-3" width="9" height="5" rx="1.5" fill="#ef4444"/><rect x="24" y="-3" width="9" height="5" rx="1.5" fill="#ef4444"/>
+  <rect x="-35" y="9" width="12" height="9" rx="3" fill="#1f2229"/><rect x="23" y="9" width="12" height="9" rx="3" fill="#1f2229"/>
+</g>
+<marker id="ah2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="${C.accent}"/></marker>
+<marker id="ahg" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="${C.good}"/></marker>
+</defs>`;
+const ALL_DEFS = DEFS_SIDE + DEFS_TOP + DEFS_REAR;
+
+function rollArrow(dir, r = 50) {
+  // Arc over the top of the car; "right" = clockwise as seen from behind.
+  const a1 = dir === 'right' ? -150 : -30;
+  const a2 = dir === 'right' ? -30 : -150;
+  const p = (a) => [r * Math.cos((a * Math.PI) / 180), r * Math.sin((a * Math.PI) / 180)];
+  const [x1, y1] = p(a1);
+  const [x2, y2] = p(a2);
+  return `<path d="M${r2(x1)},${r2(y1)} A${r},${r} 0 0 ${dir === 'right' ? 1 : 0} ${r2(x2)},${r2(y2)}" fill="none" stroke="${C.accent}" stroke-width="3" marker-end="url(#ah2)"/>`;
+}
+
+function miniStick(x, y, st = {}) {
+  const sx = st.x || 0;
+  const sy = st.y || 0;
+  return `<g transform="translate(${x} ${y})">
+    <circle r="15" fill="#1b1f29" stroke="#2f3646"/>
+    <circle cx="${r2(sx * 8)}" cy="${r2(sy * 8)}" r="6" fill="${C.accent}"/>
+    ${st.ar ? `<rect x="-26" y="19" width="52" height="15" rx="7.5" fill="#f472b6"/><text y="30" font-size="9" font-weight="800" text-anchor="middle" fill="#14161c">AIR ROLL</text>` : ''}
+    ${st.jump ? `<rect x="-26" y="${st.ar ? 37 : 19}" width="52" height="15" rx="7.5" fill="#38bdf8"/><text y="${st.ar ? 48 : 30}" font-size="9" font-weight="800" text-anchor="middle" fill="#14161c">JUMP</text>` : ''}
+  </g>`;
+}
+
+// Comic strip of the car seen from behind, one panel per moment.
+function rollStrip(m) {
+  const n = m.frames.length;
+  const pw = W / n;
+  const ph = 190;
+  const H = ph + 64;
+  const panels = m.frames.map((f, i) => {
+    const px = i * pw;
+    const cx = px + pw / 2;
+    const cy = 104;
+    const ground = f.ground ? `<rect x="${px + 4}" y="${ph - 30}" width="${pw - 8}" height="26" fill="${C.turf}"/><line x1="${px + 4}" x2="${px + pw - 4}" y1="${ph - 30}" y2="${ph - 30}" stroke="${C.turfLine}" stroke-width="2"/>` : '';
+    const ball = f.ball ? `<g transform="translate(${r2(cx + f.ball[0])} ${r2(cy + f.ball[1])}) scale(.8)"><use href="#ball"/></g>` : '';
+    const ballArrow = f.ballArrow !== undefined ? `<path d="M${r2(cx + (f.ball ? f.ball[0] : 0))},${r2(cy + (f.ball ? f.ball[1] : -60) - 18)} l${r2(f.ballArrow * 0.6)},-20" stroke="${C.good}" stroke-width="3" marker-end="url(#ahg)"/>` : '';
+    const roof = f.roofArrow ? (() => {
+      const a = ((f.roll - 90) * Math.PI) / 180;
+      return `<path d="M${r2(cx + 30 * Math.cos(a))},${r2(cy + 30 * Math.sin(a))} L${r2(cx + 62 * Math.cos(a))},${r2(cy + 62 * Math.sin(a))}" stroke="${C.good}" stroke-width="3" marker-end="url(#ahg)"/>`;
+    })() : '';
+    const lines = wrap(f.label, Math.floor(pw / 7.4));
+    return `<g>
+      <rect x="${px + 4}" y="4" width="${pw - 8}" height="${ph - 8}" rx="10" fill="#151923" stroke="#2a2f3b"/>
+      ${ground}${ball}${ballArrow}
+      <g transform="translate(${r2(cx)} ${cy})">${f.arrow ? rollArrow(f.arrow) : ''}<g transform="rotate(${r2(f.roll || 0)})"><use href="#rcar"/></g></g>
+      ${roof}
+      ${f.st ? miniStick(px + pw - 30, 30, f.st) : ''}
+      <circle cx="${px + 22}" cy="24" r="12" fill="${C.accent}"/>
+      <text x="${px + 22}" y="28.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">${i + 1}</text>
+      ${lines.map((l, j) => `<text x="${cx}" y="${ph + 18 + j * 17}" font-size="13" font-weight="${j === 0 ? 600 : 500}" text-anchor="middle" fill="${C.text}">${esc(l)}</text>`).join('')}
+    </g>`;
+  });
+  panels.push(`<text x="${W - 10}" y="${H - 6}" font-size="10" text-anchor="end" fill="${C.muted}">View from behind the car · simplified</text>`);
+  return svgDoc(W, H, ALL_DEFS, panels.join('\n'), `${m.title}: step by step`);
+}
+
+// Three panels: what the stick does with and without air roll.
+function freeAirRollExplained() {
+  const H = 280;
+  const pw = W / 3;
+  const panel = (i, title, sub, inner, st) => {
+    const px = i * pw;
+    return `<rect x="${px + 6}" y="6" width="${pw - 12}" height="${H - 12}" rx="12" fill="#151923" stroke="#2a2f3b"/>
+      <text x="${px + pw / 2}" y="32" font-size="14" font-weight="700" text-anchor="middle" fill="${C.text}">${esc(title)}</text>
+      <g transform="translate(${px + pw / 2} 120)">${inner}</g>
+      ${miniStick(px + pw / 2, 192, st)}
+      <text x="${px + pw / 2}" y="${H - 18}" font-size="13" font-weight="700" text-anchor="middle" fill="${C.accent}">${esc(sub)}</text>`;
+  };
+  const yaw = `<g opacity=".3"><use href="#tcar"/></g><g transform="rotate(35)"><use href="#tcar"/></g><path d="M-8,-44 A44,44 0 0 1 30,-30" fill="none" stroke="${C.accent}" stroke-width="3" marker-end="url(#ah2)"/><text y="-62" font-size="11" text-anchor="middle" fill="${C.muted}">seen from above</text>`;
+  const roll = `<g opacity=".3"><use href="#rcar"/></g><g transform="rotate(35)"><use href="#rcar"/></g>${rollArrow('right', 48)}<text y="-62" font-size="11" text-anchor="middle" fill="${C.muted}">seen from behind</text>`;
+  const pitch = `<g opacity=".3"><use href="#car"/></g><g transform="rotate(-30)"><use href="#car"/></g><path d="M50,8 A50,50 0 0 0 40,-30" fill="none" stroke="${C.accent}" stroke-width="3" marker-end="url(#ah2)"/><text y="-62" font-size="11" text-anchor="middle" fill="${C.muted}">seen from the side</text>`;
+  const body = [
+    panel(0, 'Stick left/right', 'turns the car (yaw)', yaw, { x: 1 }),
+    panel(1, 'Hold air roll + left/right', 'rolls the car', roll, { x: 1, ar: true }),
+    panel(2, 'Stick back/forward', 'tilts nose up/down (pitch)', pitch, { y: 1 }),
+  ].join('\n');
+  return svgDoc(W, H, ALL_DEFS, body, 'What the stick does in the air, with and without air roll');
+}
+
+// Top-down helpers (goal at the top).
+function topGoal(cx = 320, w = 120) {
+  return `<rect x="${cx - w / 2}" y="10" width="${w}" height="28" fill="#1b2a3a" stroke="${C.text}" stroke-width="2"/><line x1="${cx - w / 2 - 30}" x2="${cx + w / 2 + 30}" y1="38" y2="38" stroke="${C.text}" stroke-width="3"/><text x="${cx}" y="29" font-size="12" font-weight="700" text-anchor="middle" fill="${C.text}">GOAL</text>`;
+}
+const arrowTo = (x1, y1, x2, y2, color = C.good, dash = '') => `<path d="M${x1},${y1} L${x2},${y2}" stroke="${color}" stroke-width="3" ${dash ? `stroke-dasharray="${dash}"` : ''} marker-end="url(#${color === C.good ? 'ahg' : 'ah2'})"/>`;
+const note = (x, y, t, anchor = 'start', color = C.text, size = 13, weight = 600) => `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" fill="${color}">${esc(t)}</text>`;
+const badge = (x, y, n) => `<circle cx="${x}" cy="${y}" r="11" fill="${C.accent}"/><text x="${x}" y="${y + 4.5}" font-size="12" font-weight="800" text-anchor="middle" fill="#14161c">${n}</text>`;
+
+function powerBasics() {
+  const H = 320;
+  const parts = [topField(H), topGoal(),
+    `<path d="M150,300 L300,200" stroke="${C.text}" stroke-width="2" stroke-dasharray="4 8" opacity=".4"/>`,
+    `<g opacity=".35" transform="translate(190 273) rotate(56)"><use href="#tcar"/></g>`,
+    `<g transform="translate(296 204) rotate(56)"><use href="#tcar"/></g>`,
+    `<path d="M150,300 h-40 M160,288 h-46 M150,276 h-34" stroke="${C.text}" stroke-width="3" opacity=".5" stroke-linecap="round"/>`,
+    `<g transform="translate(320 170)"><use href="#tball"/></g>`,
+    arrowTo(320, 152, 320, 48),
+    badge(118, 248, 1), note(134, 252, 'Speed into the ball (yours + the ball’s)'),
+    badge(390, 196, 2), note(406, 200, 'Hit it with your nose or front corner'),
+    badge(390, 106, 3), note(406, 110, 'Flip direction = shot direction'),
+    note(W - 12, H - 10, 'View from above · simplified illustration', 'end', C.muted, 11, 400),
+  ];
+  return svgDoc(W, H, ALL_DEFS, parts.join('\n'), 'What makes a powerful shot');
+}
+
+function contactPoints() {
+  const H = 300;
+  const pw = W / 3;
+  const scene = (i, offset, label) => {
+    const px = i * pw;
+    const cx = px + pw / 2;
+    const bx = cx;
+    const by = 150;
+    const carX = bx + offset;
+    const dir = -offset * 2.2;
+    return `<g>
+      <rect x="${px + 6}" y="6" width="${pw - 12}" height="${H - 12}" rx="12" fill="${C.turf}" stroke="#2a2f3b"/>
+      <rect x="${cx - 40}" y="14" width="80" height="20" fill="#1b2a3a" stroke="${C.text}"/><text x="${cx}" y="28" font-size="10" font-weight="700" text-anchor="middle" fill="${C.text}">GOAL</text>
+      <g transform="translate(${bx} ${by})"><use href="#tball"/></g>
+      <g transform="translate(${carX} ${by + 37})"><use href="#tcar"/></g>
+      ${arrowTo(bx, by - 18, bx + dir, 52)}
+      <circle cx="${bx + offset * 0.55}" cy="${by + 13}" r="4" fill="${C.accent}"/>
+      ${note(cx, H - 40, label, 'middle', C.text, 13, 700)}
+    </g>`;
+  };
+  const body = [
+    scene(0, -14, 'Hit its left side → goes right'),
+    scene(1, 0, 'Hit dead center → straight'),
+    scene(2, 14, 'Hit its right side → goes left'),
+    note(W - 12, H - 14, 'View from above · simplified', 'end', C.muted, 10, 400),
+  ].join('\n');
+  return svgDoc(W, H, ALL_DEFS, body, 'Where you hit the ball decides where it goes');
+}
+
+function turnShot() {
+  const H = 320;
+  const parts = [topField(H), topGoal(),
+    `<path d="M320,300 L320,150" stroke="${C.ball}" stroke-width="2" stroke-dasharray="3 7" opacity=".6"/>`,
+    `<g opacity=".35" transform="translate(320 270)"><use href="#tball"/></g>`,
+    `<g opacity=".35" transform="translate(262 292)"><use href="#tcar"/></g>`,
+    `<g opacity=".6" transform="translate(262 232) rotate(-6)"><use href="#tcar"/></g>`,
+    `<path d="M262,292 C262,220 270,190 305,168" fill="none" stroke="${C.text}" stroke-width="2" stroke-dasharray="4 8" opacity=".5"/>`,
+    `<g transform="translate(298 176) rotate(48)"><use href="#tcar"/></g>`,
+    `<g transform="translate(320 150)"><use href="#tball"/></g>`,
+    arrowTo(326, 134, 360, 48),
+    badge(232, 300, 1), note(150, 304, 'Stay close', 'start'),
+    badge(232, 230, 2), note(70, 234, 'Drift to one side', 'start'),
+    badge(272, 160, 3), note(120, 150, 'Turn into it — no flip', 'start'),
+    note(380, 110, 'nose or corner hits it', 'start', C.good, 12, 700),
+    note(W - 12, H - 10, 'View from above · simplified illustration', 'end', C.muted, 11, 400),
+  ];
+  return svgDoc(W, H, ALL_DEFS, parts.join('\n'), 'The ground power shot (turn shot): step by step');
+}
+
+function aimWithRoll() {
+  const H = 320;
+  const parts = [topField(H),
+    `<rect x="200" y="10" width="240" height="28" fill="#1b2a3a" stroke="${C.text}" stroke-width="2"/><line x1="170" x2="470" y1="38" y2="38" stroke="${C.text}" stroke-width="3"/>`,
+    `<g opacity=".7" transform="translate(320 58) rotate(180)"><use href="#tcar"/></g>`, note(320, 116, 'defender', 'middle', C.ghost, 11, 400),
+    `<g transform="translate(320 230)"><use href="#tball"/></g>`,
+    arrowTo(320, 212, 220, 30, C.good, '6 6'), arrowTo(320, 212, 290, 30, C.good), arrowTo(320, 212, 420, 30, C.good, '6 6'),
+    note(150, 140, 'big roll right →', 'start', C.text, 12), note(150, 156, 'far left', 'start', C.good, 12, 700),
+    note(250, 190, 'slight roll:', 'end', C.text, 12), note(250, 206, 'near the middle', 'end', C.good, 12, 700),
+    note(470, 140, '← big roll left', 'end', C.text, 12), note(470, 156, 'far right', 'end', C.good, 12, 700),
+    note(320, 300, 'Rolling right aims left of the defender; rolling left aims right. More roll = further to that side.', 'middle', C.muted, 12, 400),
+  ];
+  return svgDoc(W, H, ALL_DEFS, parts.join('\n'), 'Aiming your shot with air roll (view from above)');
+}
+
+function redirectDiagram() {
+  const H = 320;
+  const parts = [topField(H), topGoal(),
+    `<path d="M610,250 C520,210 420,180 330,160" fill="none" stroke="${C.ball}" stroke-width="2" stroke-dasharray="3 7" opacity=".7"/>`,
+    `<g opacity=".4" transform="translate(560 230)"><use href="#tball"/></g>`, note(600, 290, 'pass', 'end', C.ghost, 12, 400),
+    `<g transform="translate(330 160)"><use href="#tball"/></g>`,
+    `<g opacity=".35" transform="translate(300 290) rotate(-10)"><use href="#tcar"/></g>`,
+    `<g transform="translate(318 196) rotate(-20)"><use href="#tcar"/></g>`,
+    arrowTo(330, 142, 320, 48),
+    badge(74, 296, 1), note(90, 300, 'Read the pass, take off early', 'start', C.text, 12),
+    badge(74, 192, 2), note(90, 196, 'Air roll to angle your car', 'start', C.text, 12),
+    badge(372, 150, 3), note(392, 132, 'The angle of your car', 'start', C.text, 12), note(392, 148, 'sends it at the goal', 'start', C.good, 12, 700),
+    note(W - 12, H - 10, 'View from above · simplified illustration', 'end', C.muted, 11, 400),
+  ];
+  return svgDoc(W, H, ALL_DEFS, parts.join('\n'), 'Air roll redirects: step by step');
+}
+
+// Side-view strips for the power shots (reuse sideSteps).
+const SHOT_MOVES = {
+  'shooting-and-power-shooting/bounce-powershot': {
+    title: 'The bounce power shot',
+    D: 3,
+    car: track([
+      [0, { x: 60, y: CAR_Y, a: 0 }],
+      [1.4, { x: 330 }],
+      [1.6, { x: 360, y: 236, a: -5 }, 'out'],
+      [1.75, { x: 385, y: 228, a: 25 }],
+    ]),
+    ball: track([[0, { x: 470, y: 110 }], [1.0, { x: 440, y: BALL_Y }, 'in'], [1.75, { x: 425, y: 212 }, 'out']]),
+    boost: [[0.4, 1.5]],
+    frames: [
+      { t: 0.95, label: 'Read the bounce, drive to meet it' },
+      { t: 1.6, label: 'Jump as it comes up' },
+      { t: 1.75, label: 'Flip into it: nose or corner' },
+    ],
+  },
+  'shooting-and-power-shooting/aerial-powershot': {
+    title: 'The aerial power shot',
+    D: 3,
+    car: track([
+      [0, { x: 80, y: CAR_Y, a: 0 }],
+      [1.0, { x: 220 }],
+      [1.3, { x: 250, y: 215, a: -35 }, 'out'],
+      [2.4, { x: 400, y: 110, a: -30 }],
+      [2.55, { x: 425, y: 104, a: 20 }],
+    ]),
+    ball: track([[0, { x: 560, y: 60 }], [2.55, { x: 466, y: 86 }]]),
+    boost: [[1.3, 2.5]],
+    frames: [
+      { t: 1.2, label: 'Line it up, then jump' },
+      { t: 2.0, label: 'Boost to meet it' },
+      { t: 2.55, label: 'Flip toward goal as you hit it' },
+    ],
+  },
+};
+
+const ROLL_STRIPS = {
+  'free-air-roll/rolling-control': { title: 'Rolling control', frames: [
+    { roll: 0, ground: true, st: { ar: true, jump: true }, label: 'Jump, then hold air roll' },
+    { roll: -90, arrow: 'left', st: { x: -1, ar: true }, label: 'Stick left: it rolls left' },
+    { roll: -180, arrow: 'left', st: { x: -1, ar: true }, label: 'Keep rolling: upside down' },
+    { roll: -320, arrow: 'left', st: { x: -0.4, ar: true }, label: 'Ease off as the wheels come round' },
+    { roll: -360, ground: true, st: {}, label: 'Center the stick: stop level' },
+  ] },
+  'free-air-roll/stop-on-an-angle': { title: 'Stopping on an angle', frames: [
+    { roll: 0, st: { ar: true }, label: 'Start level, hold air roll' },
+    { roll: -90, arrow: 'left', st: { x: -1, ar: true }, label: 'Tap left: stop at 90°' },
+    { roll: -180, arrow: 'left', st: { x: -1, ar: true }, label: 'Tap again: stop upside down' },
+    { roll: 0, arrow: 'right', st: { x: 1, ar: true }, label: 'Roll back right to level' },
+  ] },
+  'free-air-roll/roll-to-steer': { title: 'Roll, then pitch, to steer', frames: [
+    { roll: 0, ball: [62, 14], st: { y: 1 }, label: 'The ball is off to your right' },
+    { roll: 90, arrow: 'right', ball: [62, 14], st: { x: 1, ar: true }, label: 'Air roll right 90°' },
+    { roll: 90, roofArrow: true, ball: [62, 14], st: { y: 1 }, label: 'Stick back: the nose swings toward it' },
+  ] },
+  'shooting-with-free-air-roll/roll-and-aim': { title: 'Roll changes where the ball goes', frames: [
+    { roll: -30, ball: [0, -52], ballArrow: 40, st: { x: -1, ar: true }, label: 'Roll left → ball goes right' },
+    { roll: 0, ball: [0, -52], ballArrow: 0, st: {}, label: 'Level → straight' },
+    { roll: 30, ball: [0, -52], ballArrow: -40, st: { x: 1, ar: true }, label: 'Roll right → ball goes left' },
+  ] },
+  'shooting-with-free-air-roll/air-roll-shot': { title: 'The air roll shot', frames: [
+    { roll: 0, ground: true, ball: [0, -52], st: { jump: true }, label: 'Jump toward the ball' },
+    { roll: -35, arrow: 'left', ball: [0, -52], st: { x: -0.6, ar: true }, label: 'Air roll a little: line up a front corner' },
+    { roll: -35, ball: [0, -52], ballArrow: 34, st: { x: 0.7, y: -0.7, jump: true }, label: 'Dodge diagonally: the corner hits it' },
+  ] },
+};
+
+const INTERMEDIATE_INPUTS = {
+  'free-air-roll/rolling-control': { title: 'Rolling control', D: 5, slow: 1.5,
+    steps: [
+      { label: 'Jump', from: 0.3, to: 0.6 },
+      { label: 'Hold air roll + stick left', from: 0.6, to: 3.0 },
+      { label: 'Ease off to stop level', from: 3.0, to: 3.6 },
+      { label: 'Land on your wheels', from: 3.6, to: 5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.8, {}], [0.9, { x: -1 }], [3.0, {}], [3.3, { x: 0 }]],
+    buttons: [{ label: 'Jump', on: [[0.3, 0.55]] }, { label: 'Air roll', on: [[0.6, 3.6]] }],
+    notes: [
+      { from: 0.3, to: 0.6, text: 'Jump (hold it for height)' },
+      { from: 0.6, to: 3.0, text: 'Air roll held: left/right now ROLLS' },
+      { from: 3.0, to: 3.6, text: 'Center the stick to stop the roll' },
+      { from: 3.6, to: 5, text: 'Wheels down, land and drive' },
+    ] },
+  'free-air-roll/stop-on-an-angle': { title: 'Stopping on an angle', D: 6, slow: 1.5,
+    steps: [
+      { label: 'Roll left to 90° and stop', from: 1.0, to: 2.4 },
+      { label: 'Roll to upside down and stop', from: 2.4, to: 3.8 },
+      { label: 'Roll back to level', from: 3.8, to: 6 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [1.0, {}], [1.05, { x: -1 }], [1.55, {}], [1.6, { x: 0 }], [2.4, {}], [2.45, { x: -1 }], [2.95, {}], [3.0, { x: 0 }], [3.8, {}], [3.85, { x: 1 }], [4.95, {}], [5.0, { x: 0 }]],
+    buttons: [{ label: 'Jump', on: [[0.3, 0.55]] }, { label: 'Air roll', on: [[0.6, 5.2]] }],
+    notes: [
+      { from: 1.0, to: 1.6, text: 'Short tap left: a quarter roll' },
+      { from: 1.6, to: 2.4, text: 'Stick centered: it stays at 90°' },
+      { from: 2.4, to: 3.8, text: 'Another tap: now upside down' },
+      { from: 3.8, to: 5.2, text: 'Hold right to roll back level' },
+    ] },
+  'free-air-roll/roll-to-steer': { title: 'Roll, then pitch, to steer', D: 5, slow: 1.5,
+    steps: [
+      { label: 'Take off toward the ball', from: 0.3, to: 1.2 },
+      { label: 'Air roll right 90°', from: 1.2, to: 1.8 },
+      { label: 'Stick back: nose swings to it', from: 1.9, to: 3.0 },
+      { label: 'Boost into the ball', from: 3.0, to: 5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.35, { y: 1 }], [1.1, {}], [1.2, { y: 0 }], [1.25, { x: 1 }], [1.75, {}], [1.85, { x: 0 }], [1.95, { y: 1 }], [2.9, {}], [3.0, { y: 0 }]],
+    buttons: [{ label: 'Jump', on: [[0.3, 0.55], [0.65, 0.75]] }, { label: 'Boost', on: [[0.3, 3.6]] }, { label: 'Air roll', on: [[1.2, 1.8]] }],
+    notes: [
+      { from: 0.3, to: 1.2, text: 'Aerial up as normal' },
+      { from: 1.2, to: 1.8, text: 'Air roll + right: a quarter roll' },
+      { from: 1.9, to: 3.0, text: 'Pitch (stick back) now turns you right' },
+      { from: 3.0, to: 5, text: 'Keep boosting at the ball' },
+    ] },
+  'shooting-and-power-shooting/ground-shots': { title: 'Ground shots', D: 4,
+    steps: [
+      { label: 'Line up behind the ball', from: 0, to: 1.2 },
+      { label: 'Drive through it', from: 1.2, to: 2.0 },
+      { label: 'Follow through', from: 2.0, to: 4 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.4, { x: 0.3 }], [1.1, {}], [1.2, { x: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 2.4]] }, { label: 'Boost', on: [[0.8, 2.0]] }],
+    notes: [
+      { from: 0, to: 1.2, text: 'Steer to hit the side you want' },
+      { from: 1.2, to: 2.0, text: 'Throttle + boost through the ball' },
+      { from: 2.0, to: 4, text: 'Keep driving: don’t brake into it' },
+    ] },
+  'shooting-and-power-shooting/turn-powershot': { title: 'The turn shot', D: 4.5,
+    steps: [
+      { label: 'Stay close to the ball', from: 0, to: 0.6 },
+      { label: 'Drift to one side', from: 0.6, to: 1.4 },
+      { label: 'Turn into it', from: 1.4, to: 2.3 },
+      { label: 'No flip: recover fast', from: 2.3, to: 4.5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.6, {}], [0.7, { x: -0.4 }], [1.2, {}], [1.4, { x: 1 }], [2.2, {}], [2.3, { x: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 3]] }, { label: 'Boost', on: [[1.4, 2.4]] }],
+    notes: [
+      { from: 0, to: 0.6, text: 'Drive alongside the rolling ball' },
+      { from: 0.6, to: 1.4, text: 'Slight steer away to make space' },
+      { from: 1.4, to: 2.3, text: 'Hard turn + boost into the ball' },
+      { from: 2.3, to: 4.5, text: 'You’re still on the ground: chase it' },
+    ] },
+  'shooting-and-power-shooting/bounce-powershot': { title: 'The bounce power shot', D: 3, slow: 2,
+    steps: [
+      { label: 'Read the bounce', from: 0, to: 1.0 },
+      { label: 'Drive to meet it', from: 1.0, to: 1.55 },
+      { label: 'Jump as it comes up', from: 1.55, to: 1.7 },
+      { label: 'Diagonal flip into it', from: 1.7, to: 3 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [1.66, {}], [1.7, { x: 0.7, y: -0.7 }], [1.95, {}], [2.0, { x: 0, y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 1.7]] }, { label: 'Boost', on: [[0.4, 1.5]] }, { label: 'Jump', on: [[1.55, 1.62], [1.72, 1.8]] }],
+    notes: [
+      { from: 0, to: 1.0, text: 'Watch where it will land' },
+      { from: 1.0, to: 1.55, text: 'Get there as it bounces up' },
+      { from: 1.55, to: 1.7, text: 'Quick jump right as you meet it' },
+      { from: 1.7, to: 3, text: 'Stick diagonal + jump = flip into it' },
+    ] },
+  'shooting-and-power-shooting/aerial-powershot': { title: 'The aerial power shot', D: 3.2, slow: 1.5,
+    steps: [
+      { label: 'Line it up and jump', from: 0, to: 1.25 },
+      { label: 'Boost to meet it', from: 1.25, to: 2.48 },
+      { label: 'Flip toward goal on contact', from: 2.48, to: 3.2 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [1.05, {}], [1.1, { y: 1 }], [1.5, {}], [1.55, { y: 0.3 }], [2.45, {}], [2.48, { y: -1 }], [2.75, {}], [2.8, { y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 1.0]] }, { label: 'Jump', on: [[1.0, 1.25], [2.5, 2.58]] }, { label: 'Boost', on: [[1.25, 2.5]] }],
+    notes: [
+      { from: 0, to: 1.25, text: 'Face the goal, then take off' },
+      { from: 1.25, to: 2.48, text: 'Boost and aim the nose at the ball' },
+      { from: 2.48, to: 3.2, text: 'Stick forward + jump as you hit it' },
+    ] },
+  'shooting-with-free-air-roll/air-roll-shot': { title: 'The air roll shot', D: 3, slow: 2,
+    steps: [
+      { label: 'Jump toward the ball', from: 0.5, to: 0.8 },
+      { label: 'Air roll a little', from: 0.8, to: 1.45 },
+      { label: 'Diagonal dodge into it', from: 1.45, to: 1.8 },
+      { label: 'Front corner sends it', from: 1.8, to: 3 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.82, {}], [0.88, { x: -0.6 }], [1.4, {}], [1.46, { x: 0.7, y: -0.7 }], [1.7, {}], [1.76, { x: 0, y: 0 }]],
+    buttons: [{ label: 'Throttle', on: [[0, 0.5]] }, { label: 'Jump', on: [[0.5, 0.7], [1.5, 1.58]] }, { label: 'Air roll', on: [[0.8, 1.45]] }],
+    notes: [
+      { from: 0.5, to: 0.8, text: 'Jump at the ball' },
+      { from: 0.8, to: 1.45, text: 'Air roll + stick: a small roll only' },
+      { from: 1.45, to: 1.8, text: 'Diagonal + jump: dodge, don’t front flip' },
+      { from: 1.8, to: 3, text: 'Land and follow the shot' },
+    ] },
+  'shooting-with-free-air-roll/aim-with-roll': { title: 'Aiming with roll', D: 4.5, slow: 1.5,
+    steps: [
+      { label: 'Aerial toward the ball', from: 0.3, to: 1.6 },
+      { label: 'Roll right: a little or a lot', from: 1.6, to: 2.1 },
+      { label: 'Hit it: the ball goes left', from: 2.1, to: 4.5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.35, { y: 1 }], [1.0, {}], [1.1, { y: 0.3 }], [1.6, { y: 0.3 }], [1.65, { x: 1, y: 0 }], [2.05, {}], [2.1, { x: 0 }]],
+    buttons: [{ label: 'Jump', on: [[0.3, 0.55], [0.65, 0.75]] }, { label: 'Boost', on: [[0.3, 2.6]] }, { label: 'Air roll', on: [[1.6, 2.1]] }],
+    notes: [
+      { from: 0.3, to: 1.6, text: 'Aerial up to the ball' },
+      { from: 1.6, to: 2.1, text: 'Air roll + right: more roll = more angle' },
+      { from: 2.1, to: 4.5, text: 'The ball goes left of the defender' },
+    ] },
+  'shooting-with-free-air-roll/air-roll-redirects': { title: 'Air roll redirects', D: 4.5, slow: 1.5,
+    steps: [
+      { label: 'Read the pass, take off early', from: 0.3, to: 1.5 },
+      { label: 'Air roll to angle your car', from: 1.5, to: 2.3 },
+      { label: 'Meet it: your angle aims it', from: 2.3, to: 4.5 },
+    ],
+    stick: [[0, { x: 0, y: 0 }], [0.35, { y: 1 }], [1.0, {}], [1.1, { y: 0.3 }], [1.5, {}], [1.55, { x: -0.7, y: 0 }], [2.25, {}], [2.3, { x: 0 }]],
+    buttons: [{ label: 'Jump', on: [[0.3, 0.55], [0.65, 0.75]] }, { label: 'Boost', on: [[0.3, 2.7]] }, { label: 'Air roll', on: [[1.5, 2.3]] }],
+    notes: [
+      { from: 0.3, to: 1.5, text: 'Go early to meet the pass' },
+      { from: 1.5, to: 2.3, text: 'Air roll to face your car at the goal' },
+      { from: 2.3, to: 4.5, text: 'Hold the angle through the touch' },
+    ] },
+};
+
 // ---------- write files ----------
 function write(rel, svg) {
   const file = path.join(ROOT, rel);
@@ -1201,4 +1613,23 @@ for (const [key, m] of Object.entries(BACKBOARD)) {
 write('backboard-defense/media/catch-and-dump-steps.svg', catchAndDumpDiagram());
 write('backboard-defense/media/catch-and-dump-inputs-clip.svg', inputsClip('backboard-defense/catch-and-dump', CATCH_AND_DUMP_INPUTS));
 write('backboard-defense/media/backboard-overview.svg', backboardOverview());
+
+for (const [key, m] of Object.entries(ROLL_STRIPS)) {
+  const [course, name] = key.split('/');
+  write(`${course}/media/${name}-steps.svg`, rollStrip(m));
+}
+for (const [key, m] of Object.entries(SHOT_MOVES)) {
+  const [course, name] = key.split('/');
+  write(`${course}/media/${name}-steps.svg`, sideSteps(m));
+}
+for (const [key, spec] of Object.entries(INTERMEDIATE_INPUTS)) {
+  const [course, name] = key.split('/');
+  write(`${course}/media/${name}-inputs-clip.svg`, inputsClip(key, spec));
+}
+write('free-air-roll/media/free-air-roll-explained.svg', freeAirRollExplained());
+write('shooting-and-power-shooting/media/power-basics.svg', powerBasics());
+write('shooting-and-power-shooting/media/ground-shots-steps.svg', contactPoints());
+write('shooting-and-power-shooting/media/turn-powershot-steps.svg', turnShot());
+write('shooting-with-free-air-roll/media/aim-with-roll-steps.svg', aimWithRoll());
+write('shooting-with-free-air-roll/media/air-roll-redirects-steps.svg', redirectDiagram());
 console.log('Done.');

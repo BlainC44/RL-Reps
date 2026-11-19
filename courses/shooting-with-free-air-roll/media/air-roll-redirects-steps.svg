@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" width="640" height="320" role="img">
+<title>Air roll redirects: step by step</title>
+<style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+
+<defs>
+  <g id="car">
+    <path d="M-38,-2 L-38,-11 Q-38,-15 -34,-15 L-20,-15 L-10,-27 L16,-27 L27,-15 L35,-15 Q39,-15 39,-11 L39,-2 Q39,2 35,2 L-34,2 Q-38,2 -38,-2 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <path d="M-16,-15 L-8,-24 L5,-24 L5,-15 Z" fill="#bfe3ff"/>
+    <path d="M8,-24 L14,-24 L22,-15 L8,-15 Z" fill="#bfe3ff"/>
+    <rect x="34" y="-11" width="5" height="4" rx="1" fill="#ffe08a"/>
+    <rect x="-38" y="-11" width="3" height="4" fill="#ef4444"/>
+    <circle cx="-23" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="-23" cy="4" r="3" fill="#9ca3af"/>
+    <circle cx="24" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="24" cy="4" r="3" fill="#9ca3af"/>
+  </g>
+  <g id="flame">
+    <path d="M-38,-13 L-66,-8 L-38,-3 Z" fill="#ff7a1a"/>
+    <path d="M-38,-11 L-54,-8 L-38,-5 Z" fill="#ffd166"/>
+  </g>
+  <g id="ball">
+    <circle r="18" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M-12,-13 Q0,-4 12,-13 M-17,5 Q0,0 17,5 M-6,17 Q0,8 6,17" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+</defs>
+<defs>
+  <g id="tcar">
+    <rect x="-13" y="-22" width="26" height="44" rx="6" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <path d="M-10,-10 L10,-10 L8,-2 L-8,-2 Z" fill="#bfe3ff"/>
+    <rect x="-9" y="6" width="18" height="8" rx="2" fill="#1d4ed8"/>
+    <rect x="-12" y="-22" width="6" height="3" fill="#ffe08a"/><rect x="6" y="-22" width="6" height="3" fill="#ffe08a"/>
+  </g>
+  <g id="tball">
+    <circle r="14" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M-9,-10 Q0,-3 9,-10 M-13,4 Q0,0 13,4" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+</defs><defs><g id="rcar">
+  <rect x="-36" y="-8" width="72" height="20" rx="7" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+  <path d="M-24,-8 L-17,-24 L17,-24 L24,-8 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+  <path d="M-18,-10 L-13,-21 L13,-21 L18,-10 Z" fill="#bfe3ff"/>
+  <rect x="-33" y="-3" width="9" height="5" rx="1.5" fill="#ef4444"/><rect x="24" y="-3" width="9" height="5" rx="1.5" fill="#ef4444"/>
+  <rect x="-35" y="9" width="12" height="9" rx="3" fill="#1f2229"/><rect x="23" y="9" width="12" height="9" rx="3" fill="#1f2229"/>
+</g>
+<marker id="ah2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff7a1a"/></marker>
+<marker id="ahg" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#3ccf8e"/></marker>
+</defs>
+<rect width="640" height="320" fill="#11141b"/>
+<rect width="640" height="320" fill="#17251c"/><line x1="0" x2="640" y1="60" y2="60" stroke="#1d3324" stroke-width="1"/><line x1="0" x2="640" y1="120" y2="120" stroke="#1d3324" stroke-width="1"/><line x1="0" x2="640" y1="180" y2="180" stroke="#1d3324" stroke-width="1"/><line x1="0" x2="640" y1="240" y2="240" stroke="#1d3324" stroke-width="1"/><line x1="0" x2="640" y1="300" y2="300" stroke="#1d3324" stroke-width="1"/>
+<rect x="260" y="10" width="120" height="28" fill="#1b2a3a" stroke="#e9ecf2" stroke-width="2"/><line x1="230" x2="410" y1="38" y2="38" stroke="#e9ecf2" stroke-width="3"/><text x="320" y="29" font-size="12" font-weight="700" text-anchor="middle" fill="#e9ecf2">GOAL</text>
+<path d="M610,250 C520,210 420,180 330,160" fill="none" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="3 7" opacity=".7"/>
+<g opacity=".4" transform="translate(560 230)"><use href="#tball"/></g>
+<text x="600" y="290" font-size="12" font-weight="400" text-anchor="end" fill="#94a3b8">pass</text>
+<g transform="translate(330 160)"><use href="#tball"/></g>
+<g opacity=".35" transform="translate(300 290) rotate(-10)"><use href="#tcar"/></g>
+<g transform="translate(318 196) rotate(-20)"><use href="#tcar"/></g>
+<path d="M330,142 L320,48" stroke="#3ccf8e" stroke-width="3"  marker-end="url(#ahg)"/>
+<circle cx="74" cy="296" r="11" fill="#ff7a1a"/><text x="74" y="300.5" font-size="12" font-weight="800" text-anchor="middle" fill="#14161c">1</text>
+<text x="90" y="300" font-size="12" font-weight="600" text-anchor="start" fill="#e9ecf2">Read the pass, take off early</text>
+<circle cx="74" cy="192" r="11" fill="#ff7a1a"/><text x="74" y="196.5" font-size="12" font-weight="800" text-anchor="middle" fill="#14161c">2</text>
+<text x="90" y="196" font-size="12" font-weight="600" text-anchor="start" fill="#e9ecf2">Air roll to angle your car</text>
+<circle cx="372" cy="150" r="11" fill="#ff7a1a"/><text x="372" y="154.5" font-size="12" font-weight="800" text-anchor="middle" fill="#14161c">3</text>
+<text x="392" y="132" font-size="12" font-weight="600" text-anchor="start" fill="#e9ecf2">The angle of your car</text>
+<text x="392" y="148" font-size="12" font-weight="700" text-anchor="start" fill="#3ccf8e">sends it at the goal</text>
+<text x="628" y="310" font-size="11" font-weight="400" text-anchor="end" fill="#8a93a6">View from above · simplified illustration</text>
+</svg>
