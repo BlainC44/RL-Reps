@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 382" width="640" height="382" role="img">
+<title>The half-volley boom: step by step</title>
+<style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+
+<defs>
+  <g id="car">
+    <path d="M-38,-2 L-38,-11 Q-38,-15 -34,-15 L-20,-15 L-10,-27 L16,-27 L27,-15 L35,-15 Q39,-15 39,-11 L39,-2 Q39,2 35,2 L-34,2 Q-38,2 -38,-2 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <path d="M-16,-15 L-8,-24 L5,-24 L5,-15 Z" fill="#bfe3ff"/>
+    <path d="M8,-24 L14,-24 L22,-15 L8,-15 Z" fill="#bfe3ff"/>
+    <rect x="34" y="-11" width="5" height="4" rx="1" fill="#ffe08a"/>
+    <rect x="-38" y="-11" width="3" height="4" fill="#ef4444"/>
+    <circle cx="-23" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="-23" cy="4" r="3" fill="#9ca3af"/>
+    <circle cx="24" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="24" cy="4" r="3" fill="#9ca3af"/>
+  </g>
+  <g id="flame">
+    <path d="M-38,-13 L-66,-8 L-38,-3 Z" fill="#ff7a1a"/>
+    <path d="M-38,-11 L-54,-8 L-38,-5 Z" fill="#ffd166"/>
+  </g>
+  <g id="ball">
+    <circle r="18" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M-12,-13 Q0,-4 12,-13 M-17,5 Q0,0 17,5 M-6,17 Q0,8 6,17" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+</defs>
+<rect width="640" height="382" fill="#11141b"/>
+<rect x="0" y="262" width="640" height="38" fill="#17251c"/><line x1="0" x2="640" y1="262" y2="262" stroke="#2f6b3f" stroke-width="2"/>
+<rect x="600" y="0" width="40" height="192" fill="#1c2a22"/>
+    <line x1="600" x2="600" y1="0" y2="192" stroke="#2f6b3f" stroke-width="3"/>
+    <rect x="600" y="192" width="40" height="70" fill="#0b0f16"/><line x1="600" x2="640" y1="202" y2="202" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="214" y2="214" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="226" y2="226" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="238" y2="238" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="250" y2="250" stroke="#2a3140" stroke-width="1"/><line x1="610" x2="610" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/><line x1="622" x2="622" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/><line x1="634" x2="634" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/>
+    <line x1="600" x2="640" y1="192" y2="192" stroke="#e9ecf2" stroke-width="4"/>
+    <text transform="translate(624 96) rotate(-90)" font-size="12" font-weight="700" text-anchor="middle" fill="#8a93a6" letter-spacing="2">BACKBOARD</text>
+    <text x="620" y="252" font-size="10" font-weight="700" text-anchor="middle" fill="#8a93a6">GOAL</text>
+<polyline points="290.11,52.97 299.06,53.8 308.01,54.63 316.96,55.46 325.91,56.29 334.86,57.12 343.82,57.95 352.77,58.77 361.72,59.6 370.67,60.43 379.62,61.26 388.57,62.09 397.52,62.92 406.48,63.75 415.43,64.58 424.38,65.41 433.33,66.23 442.28,67.06 451.23,67.89 460.18,68.72 469.14,69.55 478.09,70.38 487.04,71.21 495.99,72.04 504.94,72.86 513.89,73.69 522.84,74.52 531.79,75.35 540.75,76.18 549.7,77.01 558.65,77.84 567.6,78.67 576.55,79.5 580.54,78.89 576.82,76.04 573.1,73.19 569.37,70.34 565.65,67.5 561.92,64.65 558.2,61.8 554.48,58.95 550.75,56.1 539.55,51.33 508.27,41.47 478.78,32.16 451.07,23.43 425.16,15.25 401.03,7.64 378.69,0.59 358.13,-5.89 339.37,-11.81 322.39,-17.17 307.19,-21.96 293.79,-26.19 282.17,-29.85 272.34,-32.95 264.3,-35.49 258.04,-37.46 253.57,-38.87 250.89,-39.72 250,-40" fill="none" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="3 7" opacity=".55"/>
+<g opacity="0.63" transform="translate(588 189.33) rotate(-90) scale(1 1)"><use href="#car"/></g>
+<circle cx="544" cy="199.33" r="12" fill="#ff7a1a"/><text x="544" y="203.83" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">1</text>
+<g opacity="0.82" transform="translate(575.2 74.8)"><use href="#ball"/></g>
+<g opacity="0.82" transform="translate(567.98 120) rotate(-90) scale(1 1)"><use href="#car"/></g>
+<circle cx="521.98" cy="154" r="12" fill="#ff7a1a"/><text x="521.98" y="158.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">2</text>
+<g opacity="1.00" transform="translate(548 54)"><use href="#ball"/></g>
+<g opacity="1.00" transform="translate(520 96) rotate(-55) scale(1 1)"><use href="#car"/></g>
+<circle cx="480" cy="142" r="12" fill="#ff7a1a"/><text x="480" y="146.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">3</text>
+<rect x="0" y="300" width="640" height="82" fill="#11141b"/>
+<circle cx="26" cy="318" r="9" fill="#ff7a1a"/><text x="26" y="322" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">1</text><text x="44" y="322" font-size="14" fill="#e9ecf2">Get directly under the ball on the wall</text>
+<circle cx="26" cy="340" r="9" fill="#ff7a1a"/><text x="26" y="344" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">2</text><text x="44" y="344" font-size="14" fill="#e9ecf2">Let it hit the wall first, then jump off</text>
+<circle cx="26" cy="362" r="9" fill="#ff7a1a"/><text x="26" y="366" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">3</text><text x="44" y="366" font-size="14" fill="#e9ecf2">Side flip into its underside: it booms out</text>
+<text x="628" y="374" font-size="11" text-anchor="end" fill="#8a93a6">Side view · simplified illustration</text>
+</svg>

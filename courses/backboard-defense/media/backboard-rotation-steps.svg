@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 404" width="640" height="404" role="img">
+<title>Backboard rotation: step by step</title>
+<style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+
+<defs>
+  <g id="car">
+    <path d="M-38,-2 L-38,-11 Q-38,-15 -34,-15 L-20,-15 L-10,-27 L16,-27 L27,-15 L35,-15 Q39,-15 39,-11 L39,-2 Q39,2 35,2 L-34,2 Q-38,2 -38,-2 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <path d="M-16,-15 L-8,-24 L5,-24 L5,-15 Z" fill="#bfe3ff"/>
+    <path d="M8,-24 L14,-24 L22,-15 L8,-15 Z" fill="#bfe3ff"/>
+    <rect x="34" y="-11" width="5" height="4" rx="1" fill="#ffe08a"/>
+    <rect x="-38" y="-11" width="3" height="4" fill="#ef4444"/>
+    <circle cx="-23" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="-23" cy="4" r="3" fill="#9ca3af"/>
+    <circle cx="24" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="24" cy="4" r="3" fill="#9ca3af"/>
+  </g>
+  <g id="flame">
+    <path d="M-38,-13 L-66,-8 L-38,-3 Z" fill="#ff7a1a"/>
+    <path d="M-38,-11 L-54,-8 L-38,-5 Z" fill="#ffd166"/>
+  </g>
+  <g id="ball">
+    <circle r="18" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M-12,-13 Q0,-4 12,-13 M-17,5 Q0,0 17,5 M-6,17 Q0,8 6,17" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+</defs>
+<rect width="640" height="404" fill="#11141b"/>
+<rect x="0" y="262" width="640" height="38" fill="#17251c"/><line x1="0" x2="640" y1="262" y2="262" stroke="#2f6b3f" stroke-width="2"/>
+<rect x="600" y="0" width="40" height="192" fill="#1c2a22"/>
+    <line x1="600" x2="600" y1="0" y2="192" stroke="#2f6b3f" stroke-width="3"/>
+    <rect x="600" y="192" width="40" height="70" fill="#0b0f16"/><line x1="600" x2="640" y1="202" y2="202" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="214" y2="214" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="226" y2="226" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="238" y2="238" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="250" y2="250" stroke="#2a3140" stroke-width="1"/><line x1="610" x2="610" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/><line x1="622" x2="622" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/><line x1="634" x2="634" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/>
+    <line x1="600" x2="640" y1="192" y2="192" stroke="#e9ecf2" stroke-width="4"/>
+    <text transform="translate(624 96) rotate(-90)" font-size="12" font-weight="700" text-anchor="middle" fill="#8a93a6" letter-spacing="2">BACKBOARD</text>
+    <text x="620" y="252" font-size="10" font-weight="700" text-anchor="middle" fill="#8a93a6">GOAL</text>
+<g opacity=".4" transform="translate(500 250) scale(-1 1)"><use href="#car"/></g><text x="500" y="216" font-size="11" text-anchor="middle" fill="#94a3b8">teammate in net</text>
+<polyline points="60,210 76.13,205.57 91.99,201.22 107.58,196.94 122.9,192.73 137.94,188.6 152.72,184.54 167.22,180.56 181.46,176.65 195.42,172.81 209.11,169.06 222.53,165.37 235.68,161.76 248.56,158.22 261.16,154.76 273.5,151.37 285.56,148.06 297.36,144.82 308.88,141.66 320.13,138.57 331.11,135.56 341.82,132.61 352.26,129.75 362.42,126.96 372.32,124.24 381.94,121.6 391.3,119.03 400.38,116.53 409.19,114.12 417.73,111.77 426,109.5 434,107.3 441.72,105.18 449.18,103.13 456.36,101.16 463.28,99.26 469.92,97.44 476.29,95.69 482.39,94.02 488.22,92.41 493.78,90.89 499.06,89.44 504.08,88.06 508.82,86.76 513.3,85.53 517.5,84.37 521.43,83.3 525.09,82.29 528.48,81.36 531.6,80.5 534.44,79.72 537.02,79.01 539.32,78.38 541.36,77.82 543.12,77.34 544.61,76.93 545.83,76.6 546.78,76.33 547.46,76.15 547.86,76.04 548,76" fill="none" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="3 7" opacity=".55"/>
+<g opacity="0.59" transform="translate(337.14 250) rotate(0) scale(1 1)"><use href="#flame"/><use href="#car"/></g>
+<circle cx="337.14" cy="206" r="12" fill="#ff7a1a"/><text x="337.14" y="210.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">1</text>
+<g opacity="0.73" transform="translate(574 248) rotate(-35) scale(1 1)"><use href="#car"/></g>
+<circle cx="568" cy="196" r="12" fill="#ff7a1a"/><text x="568" y="200.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">2</text>
+<g opacity="0.86" transform="translate(588 168) rotate(-90) scale(1 1)"><use href="#car"/></g>
+<circle cx="544" cy="168" r="12" fill="#ff7a1a"/><text x="544" y="172.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">3</text>
+<g opacity="1.00" transform="translate(548 76)"><use href="#ball"/></g>
+<g opacity="1.00" transform="translate(588 86) rotate(-90) scale(1 1)"><use href="#car"/></g>
+<circle cx="544" cy="46" r="12" fill="#ff7a1a"/><text x="544" y="50.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">4</text>
+<rect x="0" y="300" width="640" height="104" fill="#11141b"/>
+<circle cx="26" cy="318" r="9" fill="#ff7a1a"/><text x="26" y="322" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">1</text><text x="44" y="322" font-size="14" fill="#e9ecf2">Rotate back toward the backboard, not behind your teammate</text>
+<circle cx="26" cy="340" r="9" fill="#ff7a1a"/><text x="26" y="344" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">2</text><text x="44" y="344" font-size="14" fill="#e9ecf2">Drive up the wall above the goal</text>
+<circle cx="26" cy="362" r="9" fill="#ff7a1a"/><text x="26" y="366" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">3</text><text x="44" y="366" font-size="14" fill="#e9ecf2">Wait on the backboard, watching the play</text>
+<circle cx="26" cy="384" r="9" fill="#ff7a1a"/><text x="26" y="388" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">4</text><text x="44" y="388" font-size="14" fill="#e9ecf2">Meet the shot on the wall before it rebounds</text>
+<text x="628" y="396" font-size="11" text-anchor="end" fill="#8a93a6">Side view · simplified illustration</text>
+</svg>

@@ -875,6 +875,302 @@ const INPUTS = {
   },
 };
 
+
+// ---------- backboard scenes (side view, YOUR goal on the right) ----------
+const WALL_X = 600; // the backwall's face
+const GOAL_TOP = GROUND - 70; // crossbar height
+const ON_WALL_X = WALL_X - 12; // car center when driving on the wall
+
+function backboardDecor() {
+  let net = '';
+  for (let y = GOAL_TOP + 10; y < GROUND; y += 12) net += `<line x1="${WALL_X}" x2="${W}" y1="${y}" y2="${y}" stroke="#2a3140" stroke-width="1"/>`;
+  for (let x = WALL_X + 10; x < W; x += 12) net += `<line x1="${x}" x2="${x}" y1="${GOAL_TOP}" y2="${GROUND}" stroke="#2a3140" stroke-width="1"/>`;
+  return `<rect x="${WALL_X}" y="0" width="${W - WALL_X}" height="${GOAL_TOP}" fill="#1c2a22"/>
+    <line x1="${WALL_X}" x2="${WALL_X}" y1="0" y2="${GOAL_TOP}" stroke="${C.turfLine}" stroke-width="3"/>
+    <rect x="${WALL_X}" y="${GOAL_TOP}" width="${W - WALL_X}" height="${GROUND - GOAL_TOP}" fill="#0b0f16"/>${net}
+    <line x1="${WALL_X}" x2="${W}" y1="${GOAL_TOP}" y2="${GOAL_TOP}" stroke="${C.text}" stroke-width="4"/>
+    <text transform="translate(${WALL_X + 24} ${GOAL_TOP / 2}) rotate(-90)" font-size="12" font-weight="700" text-anchor="middle" fill="${C.muted}" letter-spacing="2">BACKBOARD</text>
+    <text x="${WALL_X + 20}" y="${GROUND - 10}" font-size="10" font-weight="700" text-anchor="middle" fill="${C.muted}">GOAL</text>`;
+}
+
+// One static picture: the whole scene, the ball's path, and the car at each
+// numbered moment (faded → solid), with the step list underneath.
+function sceneSteps(m) {
+  const sceneH = 300;
+  const H = sceneH + 16 + m.frames.length * 22;
+  const parts = [ground(sceneH), backboardDecor()];
+  if (m.extras) parts.push(m.extras);
+  if (m.ball) {
+    const [a, b] = m.ballPath || [0, m.D];
+    const pts = [];
+    for (let t = a; t <= b + 1e-9; t += (b - a) / 60) { const p = m.ball(t); pts.push(`${r2(p.x)},${r2(p.y)}`); }
+    parts.push(`<polyline points="${pts.join(' ')}" fill="none" stroke="${C.ball}" stroke-width="2" stroke-dasharray="3 7" opacity=".55"/>`);
+  }
+  m.frames.forEach((f, i) => {
+    const s = m.car(f.t);
+    const op = (0.45 + (0.55 * (i + 1)) / m.frames.length).toFixed(2);
+    if (m.ball && f.showBall !== false) {
+      const p = m.ball(f.t);
+      parts.push(`<g opacity="${op}" transform="translate(${r2(p.x)} ${r2(p.y)})"><use href="#ball"/></g>`);
+    }
+    const boosting = m.boost && during(m.boost)(f.t);
+    parts.push(`<g opacity="${op}" transform="translate(${r2(s.x)} ${r2(s.y)}) rotate(${r2(s.a)}) scale(${r2(s.sx)} ${r2(s.sy)})">${boosting ? '<use href="#flame"/>' : ''}<use href="#car"/></g>`);
+    const [dx, dy] = f.badge || [0, -44];
+    const bx = Math.min(W - 16, Math.max(16, s.x + dx));
+    const by = Math.max(16, s.y + dy);
+    parts.push(`<circle cx="${r2(bx)}" cy="${r2(by)}" r="12" fill="${C.accent}"/><text x="${r2(bx)}" y="${r2(by + 4.5)}" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">${i + 1}</text>`);
+  });
+  parts.push(`<rect x="0" y="${sceneH}" width="${W}" height="${H - sceneH}" fill="${C.bg}"/>`);
+  m.frames.forEach((f, i) => {
+    const y = sceneH + 22 + i * 22;
+    parts.push(`<circle cx="26" cy="${y - 4}" r="9" fill="${C.accent}"/><text x="26" y="${y}" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">${i + 1}</text><text x="44" y="${y}" font-size="14" fill="${C.text}">${esc(f.label)}</text>`);
+  });
+  parts.push(`<text x="${W - 12}" y="${H - 8}" font-size="11" text-anchor="end" fill="${C.muted}">Side view · simplified illustration</text>`);
+  return svgDoc(W, H, DEFS_SIDE, parts.join('\n'), `${m.title}: step by step`);
+}
+
+const teammate = (x, label = 'teammate in net') => `<g opacity=".4" transform="translate(${x} ${CAR_Y}) scale(-1 1)"><use href="#car"/></g><text x="${x}" y="${CAR_Y - 34}" font-size="11" text-anchor="middle" fill="${C.ghost}">${label}</text>`;
+
+const BACKBOARD = {
+  'backboard-defense/backboard-rotation': {
+    title: 'Backboard rotation',
+    D: 4.5,
+    car: track([
+      [0, { x: 120, y: CAR_Y, a: 0 }],
+      [1.4, { x: 500 }],
+      [1.62, { x: 574, y: CAR_Y - 2, a: -35 }],
+      [1.8, { x: ON_WALL_X, y: 232, a: -90 }],
+      [2.4, { y: 168 }],
+      [3.0, {}],
+      [3.6, { y: 86 }, 'out'],
+    ]),
+    ball: track([[0, { x: 60, y: 210 }], [2.4, {}], [3.6, { x: 548, y: 76 }, 'out']]),
+    ballPath: [2.4, 3.6],
+    boost: [[0.2, 1.4], [3.0, 3.5]],
+    extras: teammate(500),
+    steps: [
+      { label: 'Rotate back on the backboard side', from: 0, to: 1.6 },
+      { label: 'Drive up the wall, not into the net', from: 1.6, to: 2.4 },
+      { label: 'Wait on the backboard', from: 2.4, to: 3.0 },
+      { label: 'Meet the shot on the wall', from: 3.0, to: 4.5 },
+    ],
+    frames: [
+      { t: 0.8, label: 'Rotate back toward the backboard, not behind your teammate', showBall: false },
+      { t: 1.62, label: 'Drive up the wall above the goal', showBall: false, badge: [-6, -52] },
+      { t: 2.4, label: 'Wait on the backboard, watching the play', showBall: false, badge: [-44, 0] },
+      { t: 3.6, label: 'Meet the shot on the wall before it rebounds', badge: [-44, -40] },
+    ],
+    inputs: {
+      stick: [[0, { x: 0, y: 0 }], [0.3, { x: 0.4 }], [1.3, {}], [1.5, { x: 0 }]],
+      buttons: [{ label: 'Throttle', on: [[0, 2.4], [3.0, 3.6]] }, { label: 'Boost', on: [[0.2, 1.4], [3.0, 3.5]] }],
+      notes: [
+        { from: 0, to: 1.6, text: 'Steer toward the backboard side' },
+        { from: 1.6, to: 2.4, text: 'Keep throttle: drive up the wall' },
+        { from: 2.4, to: 3.0, text: 'Hold position, watch the ball' },
+        { from: 3.0, to: 4.5, text: 'Throttle + boost to meet it' },
+      ],
+    },
+  },
+  'backboard-defense/reading-the-rebound': {
+    title: 'Reading the rebound',
+    D: 4.5,
+    car: track([
+      [0, { x: 556, y: CAR_Y, a: 0, sx: -1 }],
+      [1.9, {}],
+      [2.5, { x: 440 }],
+      [2.9, { x: 410, y: 200, a: 15 }, 'out'],
+      [3.5, { x: 430, y: CAR_Y, a: 0 }, 'in'],
+    ]),
+    ball: track([
+      [0, { x: 120, y: 150 }],
+      [1.6, { x: 582, y: 80 }, 'out'],
+      [2.9, { x: 386, y: 184 }, 'in'],
+      [3.5, { x: 150, y: 110 }, 'out'],
+    ]),
+    ballPath: [0, 2.9],
+    extras: `<text x="300" y="${GROUND + 26}" font-size="12" text-anchor="middle" fill="${C.muted}">← the opponent is coming for this rebound</text>`,
+    steps: [
+      { label: 'Watch the ball onto the backboard', from: 0, to: 1.6 },
+      { label: 'Read the rebound, move under it', from: 1.6, to: 2.5 },
+      { label: 'Jump and clear it first', from: 2.5, to: 4.5 },
+    ],
+    frames: [
+      { t: 1.2, label: 'Stay in front of the net and watch it hit the backboard', badge: [0, -44] },
+      { t: 2.4, label: 'Read where it will come down and drive under it', badge: [0, -44] },
+      { t: 2.9, label: 'Jump and meet it before the opponent can', badge: [10, -50] },
+    ],
+    inputs: {
+      stick: [[0, { x: 0, y: 0 }], [2.5, {}], [2.58, { y: 0.5 }], [2.9, {}], [3.0, { y: 0 }]],
+      buttons: [{ label: 'Throttle', on: [[1.9, 2.6]] }, { label: 'Jump', on: [[2.5, 2.9]] }],
+      notes: [
+        { from: 0, to: 1.6, text: 'Hands steady: watch, don’t guess' },
+        { from: 1.6, to: 2.5, text: 'Drive out under where it will drop' },
+        { from: 2.5, to: 3.2, text: 'Jump, tilt back slightly, hit it away' },
+      ],
+    },
+  },
+  'backboard-defense/half-volley-boom': {
+    title: 'The half-volley boom',
+    D: 4.5,
+    car: track([
+      [0, { x: ON_WALL_X, y: 200, a: -90, sx: 1 }],
+      [1.5, { y: 120 }],
+      [1.85, {}],
+      [1.95, { x: 566, y: 120 }, 'out'],
+      [2.2, { x: 520, y: 96, a: -55 }],
+      [3.2, { x: 520, y: CAR_Y, a: 0 }, 'in'],
+    ]),
+    ball: track([
+      [0, { x: 150, y: 40 }],
+      [1.85, { x: 582, y: 80 }],
+      [2.2, { x: 548, y: 54 }],
+      [2.9, { x: 250, y: -40 }, 'out'],
+    ]),
+    ballPath: [0.6, 2.9],
+    steps: [
+      { label: 'Drive up under the ball', from: 0, to: 1.85 },
+      { label: 'Let it bounce off the wall, jump', from: 1.85, to: 2.0 },
+      { label: 'Side flip into the underside', from: 2.0, to: 2.4 },
+      { label: 'Boom: it flies out, away from goal', from: 2.4, to: 4.5 },
+    ],
+    frames: [
+      { t: 0.2, label: 'Get directly under the ball on the wall', showBall: false, badge: [-44, 10] },
+      { t: 1.92, label: 'Let it hit the wall first, then jump off', badge: [-46, 34] },
+      { t: 2.2, label: 'Side flip into its underside: it booms out', badge: [-40, 46] },
+    ],
+    inputs: {
+      stick: [[0, { x: 0, y: 0 }], [1.98, {}], [2.02, { x: 1 }], [2.3, {}], [2.4, { x: 0 }]],
+      buttons: [{ label: 'Throttle', on: [[0, 1.85]] }, { label: 'Jump', on: [[1.85, 1.95], [2.0, 2.08]] }],
+      notes: [
+        { from: 0, to: 1.85, text: 'Throttle: line up under it on the wall' },
+        { from: 1.85, to: 2.0, text: 'Jump off the wall after the bounce' },
+        { from: 2.0, to: 2.4, text: 'Stick sideways + jump = side flip' },
+        { from: 2.4, to: 4.5, text: 'Land and recover' },
+      ],
+    },
+  },
+  'backboard-defense/defending-from-the-ground': {
+    title: 'Defending from the ground',
+    D: 4.5,
+    car: track([
+      [0, { x: 556, y: CAR_Y, a: 0, sx: -1 }],
+      [0.8, {}],
+      [1.3, { x: 470 }],
+      [1.7, { x: 440, y: 178, a: 15 }, 'out'],
+      [2.4, { x: 430, y: CAR_Y, a: 0 }, 'in'],
+    ]),
+    ball: track([
+      [0, { x: 80, y: 140 }],
+      [1.7, { x: 408, y: 150 }],
+      [2.4, { x: 330, y: 40 }, 'out'],
+    ]),
+    ballPath: [0, 1.7],
+    boost: [[0.9, 1.5]],
+    extras: `<path d="M408,150 L548,126" stroke="${C.ball}" stroke-width="2" stroke-dasharray="3 6" opacity=".35"/><text x="520" y="110" font-size="11" text-anchor="middle" fill="${C.ghost}">where it was going</text>`,
+    steps: [
+      { label: 'Read: it’s heading for your backboard', from: 0, to: 0.8 },
+      { label: 'Drive out and jump early', from: 0.8, to: 1.7 },
+      { label: 'Cut it off toward the corner', from: 1.7, to: 4.5 },
+    ],
+    frames: [
+      { t: 0.6, label: 'Read it: the ball is heading for your backboard', showBall: true },
+      { t: 1.25, label: 'Go early, don’t wait on the goal line', badge: [0, -48] },
+      { t: 1.7, label: 'Cut it off before the wall and send it toward a corner', badge: [30, -46] },
+    ],
+    inputs: {
+      stick: [[0, { x: 0, y: 0 }], [1.35, {}], [1.42, { x: -0.7, y: 0.3 }], [1.9, {}], [2.0, { x: 0, y: 0 }]],
+      buttons: [{ label: 'Throttle', on: [[0.8, 1.6]] }, { label: 'Boost', on: [[0.9, 1.5]] }, { label: 'Jump', on: [[1.3, 1.7]] }],
+      notes: [
+        { from: 0, to: 0.8, text: 'Read the shot’s height and speed' },
+        { from: 0.8, to: 1.35, text: 'Throttle + boost out of the net' },
+        { from: 1.35, to: 1.9, text: 'Jump, aim the nose toward a corner' },
+        { from: 1.9, to: 4.5, text: 'Land and recover to back post' },
+      ],
+    },
+  },
+};
+
+// View looking straight at your backwall: goal at the bottom, corners on each side.
+function catchAndDumpDiagram() {
+  const H = 300;
+  const goalL = 230;
+  const goalR = 410;
+  const goalTop = 196;
+  const floor = 262;
+  const frames = [
+    { x: 320, y: 120, a: 0, ball: [320, 92], label: 'Meet it high and take a soft first touch on the top-front of your car' },
+    { x: 420, y: 112, a: 55, ball: [446, 96], label: 'Carry it along the wall with small touches' },
+    { x: 545, y: 130, a: 90, ball: [586, 128], label: 'Dump it into the corner, or pass to a teammate' },
+  ];
+  const parts = [
+    `<rect width="${W}" height="${H}" fill="#1c2a22"/>`,
+    `<rect x="0" y="${floor}" width="${W}" height="${H - floor}" fill="${C.turf}"/><line x1="0" x2="${W}" y1="${floor}" y2="${floor}" stroke="${C.turfLine}" stroke-width="2"/>`,
+    `<rect x="${goalL}" y="${goalTop}" width="${goalR - goalL}" height="${floor - goalTop}" fill="#0b0f16" stroke="${C.text}" stroke-width="4"/>`,
+    `<text x="320" y="${goalTop + 40}" font-size="12" font-weight="700" text-anchor="middle" fill="${C.muted}">YOUR GOAL</text>`,
+    `<path d="M0,0 Q40,150 0,${floor}" fill="#13201a"/><path d="M${W},0 Q${W - 40},150 ${W},${floor}" fill="#13201a"/>`,
+    `<text x="22" y="40" font-size="11" font-weight="700" fill="${C.muted}">CORNER</text><text x="${W - 22}" y="40" font-size="11" font-weight="700" text-anchor="end" fill="${C.muted}">CORNER</text>`,
+    `<path d="M320,92 C380,70 470,80 590,128" fill="none" stroke="${C.ball}" stroke-width="2" stroke-dasharray="3 7" opacity=".6"/>`,
+  ];
+  frames.forEach((f, i) => {
+    const op = (0.5 + (0.5 * (i + 1)) / frames.length).toFixed(2);
+    parts.push(`<g opacity="${op}" transform="translate(${f.x} ${f.y}) rotate(${f.a})"><use href="#tcar"/></g>`);
+    parts.push(`<g opacity="${op}" transform="translate(${f.ball[0]} ${f.ball[1]})"><use href="#tball"/></g>`);
+    parts.push(`<circle cx="${f.x - 34}" cy="${f.y + 30}" r="12" fill="${C.accent}"/><text x="${f.x - 34}" y="${f.y + 34.5}" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">${i + 1}</text>`);
+  });
+  const legendTop = H;
+  const HH = H + 16 + frames.length * 22;
+  parts.push(`<rect x="0" y="${legendTop}" width="${W}" height="${HH - legendTop}" fill="${C.bg}"/>`);
+  frames.forEach((f, i) => {
+    const y = legendTop + 22 + i * 22;
+    parts.push(`<circle cx="26" cy="${y - 4}" r="9" fill="${C.accent}"/><text x="26" y="${y}" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">${i + 1}</text><text x="44" y="${y}" font-size="14" fill="${C.text}">${esc(f.label)}</text>`);
+  });
+  parts.push(`<text x="${W - 12}" y="${HH - 8}" font-size="11" text-anchor="end" fill="${C.muted}">Looking at your backwall · simplified illustration</text>`);
+  return svgDoc(W, HH, DEFS_TOP, parts.join('\n'), 'Catch and dump to the corner: step by step');
+}
+
+const CATCH_AND_DUMP_INPUTS = {
+  title: 'Catch and dump',
+  D: 4.5,
+  steps: [
+    { label: 'Meet it high on the wall', from: 0, to: 1.0 },
+    { label: 'Soft first touch: let it land on you', from: 1.0, to: 1.6 },
+    { label: 'Carry it along the wall to the corner', from: 1.6, to: 2.8 },
+    { label: 'Dump it into the corner or pass', from: 2.8, to: 4.5 },
+  ],
+  stick: [[0, { x: 0, y: 0 }], [1.6, {}], [1.75, { x: 0.6 }], [2.7, {}], [2.85, { x: 1 }], [3.1, {}], [3.25, { x: 0 }]],
+  buttons: [{ label: 'Throttle', on: [[0, 1.0], [1.6, 3.1]] }, { label: 'Jump', on: [[2.85, 2.95]] }],
+  notes: [
+    { from: 0, to: 1.0, text: 'Drive up to meet it high' },
+    { from: 1.0, to: 1.6, text: 'Ease off: cushion the first touch' },
+    { from: 1.6, to: 2.8, text: 'Steer gently toward the corner' },
+    { from: 2.8, to: 4.5, text: 'Flick it off the wall into the corner' },
+  ],
+};
+
+// Overview for the first lesson: what a backboard attack looks like.
+function backboardOverview() {
+  const H = 300;
+  const ball = track([[0, { x: 140, y: 200 }], [1, { x: 582, y: 70 }, 'out'], [2, { x: 400, y: 170 }, 'in']]);
+  const pts = [];
+  for (let t = 0; t <= 2.0001; t += 0.04) { const p = ball(t); pts.push(`${r2(p.x)},${r2(p.y)}`); }
+  const parts = [
+    ground(H), backboardDecor(),
+    `<polyline points="${pts.join(' ')}" fill="none" stroke="${C.ball}" stroke-width="2.5" stroke-dasharray="4 7" opacity=".8"/>`,
+    `<g transform="translate(140 200)"><use href="#ball"/></g>`,
+    `<g opacity=".55" transform="translate(110 ${CAR_Y})"><use href="#car"/></g>`,
+    `<text x="110" y="${GROUND + 24}" font-size="12" text-anchor="middle" fill="${C.ghost}">opponent</text>`,
+    `<g transform="translate(582 70)"><circle r="22" fill="none" stroke="${C.accent}" stroke-width="2.5" stroke-dasharray="4 4"/></g>`,
+    `<text x="588" y="34" font-size="13" font-weight="700" text-anchor="end" fill="${C.accent}">1. ball hits your backboard</text>`,
+    `<ellipse cx="410" cy="168" rx="58" ry="34" fill="${C.accent}" opacity=".14" stroke="${C.accent}" stroke-dasharray="4 4"/>`,
+    `<text x="410" y="222" font-size="13" font-weight="700" text-anchor="middle" fill="${C.accent}">2. the rebound: danger zone</text>`,
+    `<text x="410" y="238" font-size="11" text-anchor="middle" fill="${C.muted}">opponents follow up here (double tap)</text>`,
+    `<text x="20" y="26" font-size="15" font-weight="800" fill="${C.text}">What you're defending</text>`,
+    `<text x="20" y="46" font-size="12" fill="${C.muted}">High balls at your backwall come back out fast and hard to read.</text>`,
+    `<text x="${W - 12}" y="${H - 10}" font-size="11" text-anchor="end" fill="${C.muted}">Side view · simplified illustration</text>`,
+  ];
+  return svgDoc(W, H, DEFS_SIDE, parts.join('\n'), 'A backboard attack: the ball hits your backwall and rebounds into the danger zone');
+}
+
 // ---------- write files ----------
 function write(rel, svg) {
   const file = path.join(ROOT, rel);
@@ -896,4 +1192,13 @@ for (const [key, spec] of Object.entries(INPUTS)) {
 write('aerial-foundations/media/aerial-shots-diagram.svg', aerialShots().diagram);
 write('recovery-and-movement/media/powerslide-turns-diagram.svg', powerslideDiagram());
 write('aerial-foundations/media/practice-loop.svg', practiceLoop());
+
+for (const [key, m] of Object.entries(BACKBOARD)) {
+  const [course, name] = key.split('/');
+  write(`${course}/media/${name}-steps.svg`, sceneSteps(m));
+  write(`${course}/media/${name}-inputs-clip.svg`, inputsClip(key, { ...m, ...m.inputs }));
+}
+write('backboard-defense/media/catch-and-dump-steps.svg', catchAndDumpDiagram());
+write('backboard-defense/media/catch-and-dump-inputs-clip.svg', inputsClip('backboard-defense/catch-and-dump', CATCH_AND_DUMP_INPUTS));
+write('backboard-defense/media/backboard-overview.svg', backboardOverview());
 console.log('Done.');

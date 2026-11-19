@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 382" width="640" height="382" role="img">
+<title>Defending from the ground: step by step</title>
+<style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+
+<defs>
+  <g id="car">
+    <path d="M-38,-2 L-38,-11 Q-38,-15 -34,-15 L-20,-15 L-10,-27 L16,-27 L27,-15 L35,-15 Q39,-15 39,-11 L39,-2 Q39,2 35,2 L-34,2 Q-38,2 -38,-2 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <path d="M-16,-15 L-8,-24 L5,-24 L5,-15 Z" fill="#bfe3ff"/>
+    <path d="M8,-24 L14,-24 L22,-15 L8,-15 Z" fill="#bfe3ff"/>
+    <rect x="34" y="-11" width="5" height="4" rx="1" fill="#ffe08a"/>
+    <rect x="-38" y="-11" width="3" height="4" fill="#ef4444"/>
+    <circle cx="-23" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="-23" cy="4" r="3" fill="#9ca3af"/>
+    <circle cx="24" cy="4" r="8" fill="#1f2229" stroke="#4b5563" stroke-width="1.5"/><circle cx="24" cy="4" r="3" fill="#9ca3af"/>
+  </g>
+  <g id="flame">
+    <path d="M-38,-13 L-66,-8 L-38,-3 Z" fill="#ff7a1a"/>
+    <path d="M-38,-11 L-54,-8 L-38,-5 Z" fill="#ffd166"/>
+  </g>
+  <g id="ball">
+    <circle r="18" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M-12,-13 Q0,-4 12,-13 M-17,5 Q0,0 17,5 M-6,17 Q0,8 6,17" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+</defs>
+<rect width="640" height="382" fill="#11141b"/>
+<rect x="0" y="262" width="640" height="38" fill="#17251c"/><line x1="0" x2="640" y1="262" y2="262" stroke="#2f6b3f" stroke-width="2"/>
+<rect x="600" y="0" width="40" height="192" fill="#1c2a22"/>
+    <line x1="600" x2="600" y1="0" y2="192" stroke="#2f6b3f" stroke-width="3"/>
+    <rect x="600" y="192" width="40" height="70" fill="#0b0f16"/><line x1="600" x2="640" y1="202" y2="202" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="214" y2="214" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="226" y2="226" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="238" y2="238" stroke="#2a3140" stroke-width="1"/><line x1="600" x2="640" y1="250" y2="250" stroke="#2a3140" stroke-width="1"/><line x1="610" x2="610" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/><line x1="622" x2="622" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/><line x1="634" x2="634" y1="192" y2="262" stroke="#2a3140" stroke-width="1"/>
+    <line x1="600" x2="640" y1="192" y2="192" stroke="#e9ecf2" stroke-width="4"/>
+    <text transform="translate(624 96) rotate(-90)" font-size="12" font-weight="700" text-anchor="middle" fill="#8a93a6" letter-spacing="2">BACKBOARD</text>
+    <text x="620" y="252" font-size="10" font-weight="700" text-anchor="middle" fill="#8a93a6">GOAL</text>
+<path d="M408,150 L548,126" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="3 6" opacity=".35"/><text x="520" y="110" font-size="11" text-anchor="middle" fill="#94a3b8">where it was going</text>
+<polyline points="80,140 85.47,140.17 90.93,140.33 96.4,140.5 101.87,140.67 107.33,140.83 112.8,141 118.27,141.17 123.73,141.33 129.2,141.5 134.67,141.67 140.13,141.83 145.6,142 151.07,142.17 156.53,142.33 162,142.5 167.47,142.67 172.93,142.83 178.4,143 183.87,143.17 189.33,143.33 194.8,143.5 200.27,143.67 205.73,143.83 211.2,144 216.67,144.17 222.13,144.33 227.6,144.5 233.07,144.67 238.53,144.83 244,145 249.47,145.17 254.93,145.33 260.4,145.5 265.87,145.67 271.33,145.83 276.8,146 282.27,146.17 287.73,146.33 293.2,146.5 298.67,146.67 304.13,146.83 309.6,147 315.07,147.17 320.53,147.33 326,147.5 331.47,147.67 336.93,147.83 342.4,148 347.87,148.17 353.33,148.33 358.8,148.5 364.27,148.67 369.73,148.83 375.2,149 380.67,149.17 386.13,149.33 391.6,149.5 397.07,149.67 402.53,149.83 408,150" fill="none" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="3 7" opacity=".55"/>
+<g opacity="0.63" transform="translate(195.76 143.53)"><use href="#ball"/></g>
+<g opacity="0.63" transform="translate(556 250) rotate(0) scale(-1 1)"><use href="#car"/></g>
+<circle cx="556" cy="206" r="12" fill="#ff7a1a"/><text x="556" y="210.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">1</text>
+<g opacity="0.82" transform="translate(321.18 147.35)"><use href="#ball"/></g>
+<g opacity="0.82" transform="translate(478.6 250) rotate(0) scale(-1 1)"><use href="#flame"/><use href="#car"/></g>
+<circle cx="478.6" cy="202" r="12" fill="#ff7a1a"/><text x="478.6" y="206.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">2</text>
+<g opacity="1.00" transform="translate(408 150)"><use href="#ball"/></g>
+<g opacity="1.00" transform="translate(440 178) rotate(15) scale(-1 1)"><use href="#car"/></g>
+<circle cx="470" cy="132" r="12" fill="#ff7a1a"/><text x="470" y="136.5" font-size="13" font-weight="800" text-anchor="middle" fill="#14161c">3</text>
+<rect x="0" y="300" width="640" height="82" fill="#11141b"/>
+<circle cx="26" cy="318" r="9" fill="#ff7a1a"/><text x="26" y="322" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">1</text><text x="44" y="322" font-size="14" fill="#e9ecf2">Read it: the ball is heading for your backboard</text>
+<circle cx="26" cy="340" r="9" fill="#ff7a1a"/><text x="26" y="344" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">2</text><text x="44" y="344" font-size="14" fill="#e9ecf2">Go early, don’t wait on the goal line</text>
+<circle cx="26" cy="362" r="9" fill="#ff7a1a"/><text x="26" y="366" font-size="11" font-weight="800" text-anchor="middle" fill="#14161c">3</text><text x="44" y="366" font-size="14" fill="#e9ecf2">Cut it off before the wall and send it toward a corner</text>
+<text x="628" y="374" font-size="11" text-anchor="end" fill="#8a93a6">Side view · simplified illustration</text>
+</svg>
