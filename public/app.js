@@ -99,7 +99,24 @@ async function catalogView() {
   if (!courses.length) {
     nodes.push(h('p', { class: 'muted' }, 'No courses yet. Add one under courses/ — see the README.'));
   }
-  nodes.push(
+
+  // Group courses under their "section" label (e.g. "For beginners"), keeping course order.
+  const groups = [];
+  for (const c of courses) {
+    const label = c.section || '';
+    let g = groups.find((x) => x.label === label);
+    if (!g) groups.push((g = { label, courses: [] }));
+    g.courses.push(c);
+  }
+  for (const g of groups) {
+    if (g.label) nodes.push(h('h3', { class: 'group-title' }, g.label));
+    nodes.push(courseGrid(g.courses));
+  }
+  render(...nodes);
+}
+
+function courseGrid(courses) {
+  return (
     h('div', { class: 'grid' },
       courses.map((c) =>
         h('a', { class: 'card', href: `#/course/${c.id}` },
@@ -112,9 +129,8 @@ async function catalogView() {
             h('span', {}, `${c.unitCount} units${c.estimatedMinutes ? ` · ~${c.estimatedMinutes} min` : ''}`),
             me.user ? h('span', {}, c.completedCount === c.unitCount ? '✓ Done' : `${c.completedCount}/${c.unitCount}`) : null),
           me.user ? progressBar(c.completedCount, c.unitCount) : null),
-      )),
+      ))
   );
-  render(...nodes);
 }
 
 function authView(mode) {

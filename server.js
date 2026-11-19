@@ -120,6 +120,7 @@ function createApp({ coursesDir = COURSES_DIR, dataFile = DATA_FILE } = {}) {
       game: course.game,
       summary: course.summary,
       level: course.level,
+      section: course.section,
       estimatedMinutes: course.estimatedMinutes,
       unitCount: course.units.length,
       completedCount: completed,

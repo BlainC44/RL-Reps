@@ -3,15 +3,57 @@
   "game": "Rocket League",
   "level": "Intermediate",
   "order": 3,
+  "section": "For beginners",
   "estimatedMinutes": 60,
   "summary": "Shut down shots and double taps off your backwall: rotate onto the backboard, read the rebound, and clear it safely.",
   "description": "High balls at your backwall come back out fast and are hard to read, which is why backboard attacks score so often. This course builds the defensive habits that stop them: where to be, how to read the bounce, and three ways to clear. Work through it in order. Each unit builds on the last.",
   "units": [
-    { "id": "why-the-backboard", "title": "Why the backboard matters (read first)", "type": "text", "minutes": 4, "file": "01-why-the-backboard.md" },
-    { "id": "backboard-rotation", "title": "Backboard rotation", "type": "drill", "reps": 15, "minutes": 10, "file": "02-backboard-rotation.md" },
-    { "id": "reading-the-rebound", "title": "Reading the rebound", "type": "drill", "reps": 25, "minutes": 12, "file": "03-reading-the-rebound.md" },
-    { "id": "half-volley-boom", "title": "The half-volley boom", "type": "drill", "reps": 25, "minutes": 12, "file": "04-half-volley-boom.md" },
-    { "id": "catch-and-dump", "title": "Catch and dump to the corner", "type": "drill", "reps": 20, "minutes": 12, "file": "05-catch-and-dump.md" },
-    { "id": "defending-from-the-ground", "title": "Defending from the ground", "type": "drill", "reps": 20, "minutes": 10, "file": "06-defending-from-the-ground.md" }
+    {
+      "id": "why-the-backboard",
+      "title": "Why the backboard matters (read first)",
+      "type": "text",
+      "minutes": 4,
+      "file": "01-why-the-backboard.md"
+    },
+    {
+      "id": "backboard-rotation",
+      "title": "Backboard rotation",
+      "type": "drill",
+      "reps": 15,
+      "minutes": 10,
+      "file": "02-backboard-rotation.md"
+    },
+    {
+      "id": "reading-the-rebound",
+      "title": "Reading the rebound",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 12,
+      "file": "03-reading-the-rebound.md"
+    },
+    {
+      "id": "half-volley-boom",
+      "title": "The half-volley boom",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 12,
+      "file": "04-half-volley-boom.md"
+    },
+    {
+      "id": "catch-and-dump",
+      "title": "Catch and dump to the corner",
+      "type": "drill",
+      "reps": 20,
+      "minutes": 12,
+      "file": "05-catch-and-dump.md"
+    },
+    {
+      "id": "defending-from-the-ground",
+      "title": "Defending from the ground",
+      "type": "drill",
+      "reps": 20,
+      "minutes": 10,
+      "file": "06-defending-from-the-ground.md"
+    }
   ]
 }

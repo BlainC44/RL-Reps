@@ -87,6 +87,7 @@ The folder name is the course's ID (it appears in the URL), so use lowercase wor
 | `units[].video` | | YouTube or Vimeo link (auto-embedded) or a direct video file URL. |
 | `units[].minutes` | | Rough time estimate. |
 | `game`, `level`, `summary`, `description`, `estimatedMinutes`, `order` | | Shown in the catalog. Lower `order` comes first. |
+| `section` | | Groups courses under a label on the home page, e.g. `"For beginners"`. |
 
 ### Unit Markdown
 

@@ -3,13 +3,42 @@
   "game": "Rocket League",
   "level": "Beginner–Intermediate",
   "order": 2,
+  "section": "For beginners",
   "estimatedMinutes": 40,
   "summary": "Land on your wheels, turn around fast, and keep speed. The movement habits that make every other mechanic easier.",
   "description": "Faster recoveries mean you're back in the play sooner. Work through these in order; each one builds on the last.",
   "units": [
-    { "id": "land-on-wheels", "title": "Landing on your wheels", "type": "drill", "reps": 20, "minutes": 8, "file": "01-land-on-wheels.md" },
-    { "id": "powerslide-turns", "title": "Powerslide turns", "type": "drill", "reps": 20, "minutes": 8, "file": "02-powerslide-turns.md" },
-    { "id": "half-flip", "title": "The half-flip", "type": "drill", "reps": 30, "minutes": 12, "file": "03-half-flip.md" },
-    { "id": "wavedash", "title": "The wavedash", "type": "drill", "reps": 25, "minutes": 12, "file": "04-wavedash.md" }
+    {
+      "id": "land-on-wheels",
+      "title": "Landing on your wheels",
+      "type": "drill",
+      "reps": 20,
+      "minutes": 8,
+      "file": "01-land-on-wheels.md"
+    },
+    {
+      "id": "powerslide-turns",
+      "title": "Powerslide turns",
+      "type": "drill",
+      "reps": 20,
+      "minutes": 8,
+      "file": "02-powerslide-turns.md"
+    },
+    {
+      "id": "half-flip",
+      "title": "The half-flip",
+      "type": "drill",
+      "reps": 30,
+      "minutes": 12,
+      "file": "03-half-flip.md"
+    },
+    {
+      "id": "wavedash",
+      "title": "The wavedash",
+      "type": "drill",
+      "reps": 25,
+      "minutes": 12,
+      "file": "04-wavedash.md"
+    }
   ]
 }
